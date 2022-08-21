@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 // Project imports:
-import 'package:tik_tak_toe/utils/colors.dart' as app_colors;
+import 'package:tic_tac_toe/utils/colors.dart' as app_colors;
 
 class SingleMessageDialog extends StatelessWidget {
   final DialogRequest request;

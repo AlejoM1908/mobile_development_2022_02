@@ -1,17 +1,18 @@
-// Dart imports:
+import 'dart:io';
 import 'dart:math';
 
-// Package imports:
 import 'package:stacked/stacked.dart';
 import 'package:tic_tac_toe/app/app.locator.dart';
 import 'package:tic_tac_toe/services/game_service/game_service.dart';
 
-/// The class StartupViewModel is the ViewModel for the startup route
-class GameViewModel extends BaseViewModel {
+class GameBoardViewModel extends ReactiveViewModel {
   final gameService = locator<GameService>();
-  
-  clearBoard(){
-    gameService.clearGame();
+
+  tileTap(int index) {
+    gameService.tileTap(index);
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [gameService];
 }

@@ -6,8 +6,8 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 // Project imports:
-import 'package:tik_tak_toe/app/app.locator.dart';
-import 'package:tik_tak_toe/app/app.router.dart';
+import 'package:tic_tac_toe/app/app.locator.dart';
+import 'package:tic_tac_toe/app/app.router.dart';
 
 /// The class StartupViewModel is the ViewModel for the startup route
 class StartupViewModel extends BaseViewModel {
@@ -16,7 +16,7 @@ class StartupViewModel extends BaseViewModel {
 
   StartupViewModel() {
     // Using a 3 seconds timer, then navigating to other route
-    Timer(const Duration(seconds: 3), _nextScreen);
+    Timer(const Duration(seconds: 1), _nextScreen);
   }
 
   /// The method _navigateToGame is used to clear the widget tree and navigate to the game route

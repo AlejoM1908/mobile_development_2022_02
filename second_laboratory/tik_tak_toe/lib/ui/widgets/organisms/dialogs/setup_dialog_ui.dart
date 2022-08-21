@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 // Project imports:
-import 'package:tik_tak_toe/app/app.locator.dart';
-import 'package:tik_tak_toe/models/dialog_type.dart';
-import 'package:tik_tak_toe/ui/widgets/organisms/dialogs/single_message_dialog.dart';
+import 'package:tic_tac_toe/app/app.locator.dart';
+import 'package:tic_tac_toe/models/dialog_type.dart';
+import 'package:tic_tac_toe/ui/widgets/organisms/dialogs/single_message_dialog.dart';
 
 void setupDialogUI() {
   final _dialogService = locator<DialogService>();
