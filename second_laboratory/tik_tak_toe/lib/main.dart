@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 // Project imports:
-import 'package:tik_tak_toe/app/app.locator.dart';
-import 'package:tik_tak_toe/app/app.router.dart';
-import 'package:tik_tak_toe/config/development.dart';
-import 'package:tik_tak_toe/ui/widgets/organisms/dialogs/setup_dialog_ui.dart';
+import 'package:tic_tac_toe/app/app.locator.dart';
+import 'package:tic_tac_toe/app/app.router.dart';
+import 'package:tic_tac_toe/config/development.dart';
+import 'package:tic_tac_toe/ui/widgets/organisms/dialogs/setup_dialog_ui.dart';
 import 'env.dart';
 import 'utils/colors.dart' as app_colors;
 
