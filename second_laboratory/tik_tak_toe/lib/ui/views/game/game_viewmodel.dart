@@ -14,4 +14,9 @@ class GameViewModel extends BaseViewModel {
     gameService.clearGame();
     notifyListeners();
   }
+
+  setIA(){
+    gameService.switchIA();
+    notifyListeners();
+  }
 }

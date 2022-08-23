@@ -3,112 +3,124 @@ import 'dart:math';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tic_tac_toe/app/app.locator.dart';
+import 'package:tic_tac_toe/models/player_model.dart';
 
-class GameService with ReactiveServiceMixin{
+class GameService with ReactiveServiceMixin {
   final _dialogService = locator<DialogService>();
-  List charactersList = List.filled(9, '');
-  String firstName = 'Player O';
-  String secondName = 'Player X';
+  List<String> charactersList = List.filled(9, '');
+  List<Player> players = [];
   bool turn = Random().nextBool(); // false for player1, true for player2
+  bool isIA = false;
   final _counter = ReactiveValue<int>(0);
-  int firstScore = 0;
-  int secondScore = 0;
 
-  GameService(){
+  GameService() {
     listenToReactiveValues([_counter]);
+    players.add(HumanPlayer(character: 'x', name: 'Player X'));
+    players.add(HumanPlayer(character: 'o', name: 'Player O'));
   }
 
-  setDefaultValues(){
+  void setDefaultValues() {
+    /// Start a new game saving the current scores
     charactersList = List.filled(9, '');
-    turn = Random().nextBool(); 
-    _counter.value = 0;
-  }
-
-  clearGame(){
-    setDefaultValues();
     turn = Random().nextBool();
-    firstScore = 0;
-    secondScore = 0;
+    _counter.value = 0;
+
+    if (turn && isIA) placeCharacter(players[1].getMove(charactersList));
 
     notifyListeners();
   }
 
-  tileTap(int index) {
-    if (charactersList[index] == '') {
-      charactersList[index] = turn ? 'x' : 'o';
+  void clearGame() {
+    /// Clear the game board and the scores
+    setDefaultValues();
+
+    for (var player in players) {
+      player.resetScore();
+    }
+
+    notifyListeners();
+  }
+
+  void switchIA() {
+    /// Switch between IA and human player
+    isIA = !isIA;
+    players.removeLast();
+
+    isIA
+        ? players.add(MinMaxAIPlayer(character: 'o', name: 'IA player'))
+        : players.add(HumanPlayer(character: 'o', name: 'Player O'));
+
+    clearGame();
+    notifyListeners();
+  }
+
+  void placeCharacter(int index) {
+    /// Place the character in the board if the index is not -1
+    if (index >= 0 && charactersList[index] == '') {
+      charactersList[index] = turn ? players[1].character : players[0].character;
       turn = !turn;
-      _counter.value ++;
-
-      if (_counter.value == 9) {
-        _dialogService.showDialog(
-          title: 'Game Over',
-          description: 'Game is a draw'
-        );
-        setDefaultValues();
-      }
+      _counter.value++;
     }
 
-    checkWiner(index);
+    checkWiner(index) ? _finishGame() : null;
+    
+    if (_counter.value == 9) {
+      _dialogService.showDialog(
+        title: 'Game Over',
+        description: 'It is a draw',
+      );
+      setDefaultValues();
+    }
+
+    notifyListeners();
   }
 
-  checkWiner(int index){
-    var character = charactersList[index];
-    if (character == '') {
-      return;
+  void tileTap(int index) {
+    /// Place the character in the board
+    placeCharacter(index);
+
+    if (isIA) {
+      /// If the IA is playing, play the move
+      placeCharacter(players[1].getMove(charactersList));
     }
 
-    // Check columns
-    for (int i = 0; i < 3; i++){
-      if (
-        character == charactersList[i] &&
-        character == charactersList[i + 3] &&
-        character == charactersList[i + 6]
-      ){
-        _finishGame();
-        return;
-      }
-    }
-
-    // Check rows
-    for (int i = 0; i < 7; i += 3){
-      if (
-        character == charactersList[i] &&
-        character == charactersList[i + 1] &&
-        character == charactersList[i + 2]
-      ){
-        _finishGame();
-        return;
-      }
-    }
-
-    // Check diagonals
-    if (
-      character == charactersList[0] &&
-      character == charactersList[4] &&
-      character == charactersList[8]
-    ){
-      _finishGame();
-      return;
-    }
-
-    if (
-      character == charactersList[2] &&
-      character == charactersList[4] &&
-      character == charactersList[6]
-    ){
-      _finishGame();
-      return;
-    }
+    notifyListeners();
   }
 
-  _finishGame(){
+  bool checkWiner(int index) {
+    /// Check if there is a winner
+    var character = turn ? 'x' : 'o';
+    var row = index ~/ 3;
+    var column = index % 3;
+    var diagonal = (row == column) ? true : false;
+    var antiDiagonal = (row + column == 2) ? true : false;
+
+    if ((charactersList[row * 3] == character &&
+            charactersList[row * 3 + 1] == character &&
+            charactersList[row * 3 + 2] == character) ||
+        (charactersList[column] == character &&
+            charactersList[column + 3] == character &&
+            charactersList[column + 6] == character) ||
+        (diagonal &&
+            charactersList[0] == character &&
+            charactersList[4] == character &&
+            charactersList[8] == character) ||
+        (antiDiagonal &&
+            charactersList[2] == character &&
+            charactersList[4] == character &&
+            charactersList[6] == character)) return true;
+
+    return false;
+  }
+
+  _finishGame() {
     _dialogService.showDialog(
       title: 'Game Over',
       description:
-          'Game is over. The winner is ${turn ? firstName : secondName}',
+          'Game is over. The winner is ${turn ? players[0].name : players[1].name}',
     );
 
-    turn ? firstScore ++ : secondScore ++;
+    turn ? players[0].incrementScore() : players[1].incrementScore();
 
     setDefaultValues();
   }
