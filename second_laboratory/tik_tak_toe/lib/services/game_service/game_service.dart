@@ -47,7 +47,7 @@ class GameService with ReactiveServiceMixin {
     players.removeLast();
 
     isIA
-        ? players.add(MinMaxAIPlayer(character: 'o', name: 'IA player'))
+        ? players.add(MiniMaxAIPlayer(character: 'o', name: 'IA player'))
         : players.add(HumanPlayer(character: 'o', name: 'Player O'));
 
     clearGame();
@@ -56,22 +56,25 @@ class GameService with ReactiveServiceMixin {
 
   void placeCharacter(int index) {
     /// Place the character in the board if the index is not -1
-    if (index >= 0 && charactersList[index] == '') {
-      charactersList[index] = turn ? players[1].character : players[0].character;
-      turn = !turn;
-      _counter.value++;
-    }
+    if (index < 0 && charactersList[index] != '')
+      return;
 
-    checkWiner(index) ? _finishGame() : null;
-    
+    charactersList[index] = turn ? players[1].character : players[0].character;
+    turn = !turn;
+    _counter.value++;
+
     if (_counter.value == 9) {
       _dialogService.showDialog(
         title: 'Game Over',
-        description: 'It is a draw',
+        description: 'It\'s a draw',
       );
+
       setDefaultValues();
+      notifyListeners();
+      return;
     }
 
+    if (checkWinner(index)) _finishGame();
     notifyListeners();
   }
 
@@ -83,11 +86,9 @@ class GameService with ReactiveServiceMixin {
       /// If the IA is playing, play the move
       placeCharacter(players[1].getMove(charactersList));
     }
-
-    notifyListeners();
   }
 
-  bool checkWiner(int index) {
+  bool checkWinner(int index) {
     /// Check if there is a winner
     var character = turn ? 'x' : 'o';
     var row = index ~/ 3;
