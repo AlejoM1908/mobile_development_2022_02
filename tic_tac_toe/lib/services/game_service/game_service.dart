@@ -1,8 +1,13 @@
+// Dart imports:
 import 'dart:math';
 
+// Package imports:
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+// Project imports:
 import 'package:tic_tac_toe/app/app.locator.dart';
+import 'package:tic_tac_toe/models/dialog_type.dart';
 import 'package:tic_tac_toe/models/player_model.dart';
 
 class GameService with ReactiveServiceMixin {
@@ -70,9 +75,11 @@ class GameService with ReactiveServiceMixin {
     _counter.value++;
 
     if (_counter.value == 9) {
-      _dialogService.showDialog(
+      _dialogService.showCustomDialog(
+        variant: DialogType.singleMessage,
         title: 'Game Over',
         description: 'It\'s a draw',
+        mainButtonTitle: 'New Game',
       );
 
       setDefaultValues();
@@ -93,10 +100,12 @@ class GameService with ReactiveServiceMixin {
   }
 
   _finishGame() {
-    _dialogService.showDialog(
+    _dialogService.showCustomDialog(
+      variant: DialogType.singleMessage,
       title: 'Game Over',
       description:
           'Game is over. The winner is ${turn ? players[0].name : players[1].name}',
+          mainButtonTitle: 'New Game',
     );
 
     turn ? players[0].incrementScore() : players[1].incrementScore();

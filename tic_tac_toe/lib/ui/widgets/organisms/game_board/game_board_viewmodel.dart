@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:stacked/stacked.dart';
+
+// Project imports:
 import 'package:tic_tac_toe/app/app.locator.dart';
 import 'package:tic_tac_toe/services/game_service/game_service.dart';
 

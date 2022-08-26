@@ -52,7 +52,7 @@ class SingleMessageDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: app_colors.secondaryVariant,
+                  color: app_colors.primary,
                   borderRadius: BorderRadius.circular(5.0)),
             ),
           ),

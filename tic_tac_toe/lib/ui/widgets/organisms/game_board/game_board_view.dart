@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:stacked/stacked.dart';
+
+// Project imports:
 import 'package:tic_tac_toe/ui/widgets/atoms/game_grid.dart';
 import 'package:tic_tac_toe/ui/widgets/atoms/turn_message.dart';
 import 'package:tic_tac_toe/ui/widgets/atoms/user_score.dart';

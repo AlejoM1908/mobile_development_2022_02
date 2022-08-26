@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:stacked_services/stacked_services.dart';
@@ -16,6 +17,8 @@ void main() {
   setupLocator();
   setupDialogUI();
   Development();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
 /// Main widget for the app

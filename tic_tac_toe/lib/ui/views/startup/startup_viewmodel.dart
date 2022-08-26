@@ -20,12 +20,12 @@ class StartupViewModel extends BaseViewModel {
   }
 
   /// The method _navigateToGame is used to clear the widget tree and navigate to the game route
-  Future _navigateToGame() async {
-    await _navigationService.clearStackAndShow(Routes.gameView);
+  Future _navigateToMainMenu() async {
+    await _navigationService.clearStackAndShow(Routes.mainMenuView);
   }
 
   /// The method _nextScreen is used to chose the next route to push into the widget tree
   _nextScreen() async {
-    await _navigateToGame();
+    await _navigateToMainMenu();
   }
 }

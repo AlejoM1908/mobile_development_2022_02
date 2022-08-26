@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:stacked/stacked.dart';
-import 'package:tic_tac_toe/ui/widgets/organisms/game_board/game_board_view.dart';
 
 // Project imports:
-import 'game_viewmodel.dart';
+import 'package:tic_tac_toe/ui/widgets/organisms/game_board/game_board_view.dart';
 import '../../../utils/colors.dart' as app_colors;
+import 'game_viewmodel.dart';
 
 // The class GameView is the view for the game route
 class GameView extends StatelessWidget {
