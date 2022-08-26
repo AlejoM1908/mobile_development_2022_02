@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:math';
-
 // Package imports:
 import 'package:stacked/stacked.dart';
 import 'package:tic_tac_toe/app/app.locator.dart';

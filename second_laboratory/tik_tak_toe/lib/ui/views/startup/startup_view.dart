@@ -20,7 +20,7 @@ class StartupView extends StatelessWidget {
                 children: <Widget>[
                   Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Center(
                             child: Text('Loading app'))
                       ])
