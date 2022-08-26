@@ -22,10 +22,12 @@ class GameView extends StatelessWidget {
               backgroundColor: app_colors.background,
               actions: [
                 IconButton(
+                  icon: const Icon(Icons.android),
+                  onPressed: () => model.setIA(),
+                ),
+                IconButton(
                   icon: const Icon(Icons.refresh),
-                  onPressed: () {
-                    model.clearBoard();
-                  },
+                  onPressed: () => model.clearBoard(),
                 ),
               ],
               title: const Text(
