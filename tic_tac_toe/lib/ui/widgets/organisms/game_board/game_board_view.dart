@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:stacked/stacked.dart';
+
+// Project imports:
 import 'package:tic_tac_toe/ui/widgets/atoms/game_grid.dart';
 import 'package:tic_tac_toe/ui/widgets/atoms/turn_message.dart';
 import 'package:tic_tac_toe/ui/widgets/atoms/user_score.dart';
@@ -20,24 +25,24 @@ class GameBoard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   UserScore(
-                    userName: model.gameService.players[0].name,
-                    userScore: model.gameService.players[0].score,
+                    userName: model.getPlayer1().name,
+                    userScore: model.getPlayer1().score,
                   ),
                   UserScore(
-                    userName: model.gameService.players[1].name,
-                    userScore: model.gameService.players[1].score,
+                    userName: model.getPlayer2().name,
+                    userScore: model.getPlayer2().score,
                   ),
                 ],
               ),
             ),
             GameGrid(
               onTileTap: (index) => model.tileTap(index),
-              charactersList: model.gameService.charactersList,
+              charactersList: model.getGrid(),
             ),
             TurnMessage(
-              turn: !model.gameService.turn,
-              firstName: model.gameService.players[0].name,
-              secondName: model.gameService.players[1].name,
+              turn: !model.getTurn(),
+              firstName: model.getPlayer1().name,
+              secondName: model.getPlayer2().name,
             ),
           ],
         ),

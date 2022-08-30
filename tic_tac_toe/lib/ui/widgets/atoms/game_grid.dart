@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../../utils/colors.dart' as app_colors;
 
 class GameGrid extends StatefulWidget {
+  /// Widget that represents the game grid
   final Function onTileTap;
   final List charactersList;
 

@@ -8,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tic_tac_toe/utils/colors.dart' as app_colors;
 
 class SingleMessageDialog extends StatelessWidget {
+  /// Dialog widget that display a message to the user.
   final DialogRequest request;
   final Function(DialogResponse) completer;
 
@@ -52,7 +53,7 @@ class SingleMessageDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: app_colors.secondaryVariant,
+                  color: app_colors.primary,
                   borderRadius: BorderRadius.circular(5.0)),
             ),
           ),
