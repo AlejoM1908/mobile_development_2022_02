@@ -15,18 +15,20 @@ import 'package:tic_tac_toe/models/dialog_type.dart';
 import 'package:tic_tac_toe/services/game_service/game_service.dart';
 
 class MainMenuViewModel extends BaseViewModel{
+  /// Viewmodel for the main menu widget
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   final _gameService = locator<GameService>();
-  
   String title = 'TIC TAC TOE';
 
   void newGame() {
+    /// The newGame method is used to start a new game and navigate to the game screen
     _gameService.clearGame();
     _navigationService.navigateTo(Routes.gameView);
   }
 
   Future<void> selectDifficulty() async {
+    /// The selectDifficulty method is used to select the difficulty of the game
     var selected = await _dialogService.showCustomDialog(
       variant: DialogType.difficultySelector,
       title: 'Dificultad de IA',
@@ -38,6 +40,7 @@ class MainMenuViewModel extends BaseViewModel{
   }
 
   void closeApp() {
+    /// The closeApp method is used to close the application
     if (Platform.isAndroid) {
       SystemNavigator.pop();
     } else if (Platform.isIOS) {

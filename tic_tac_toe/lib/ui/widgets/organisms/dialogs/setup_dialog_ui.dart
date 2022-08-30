@@ -26,8 +26,10 @@ void setupDialogUI() {
 Widget _customDialogUI(
     {required DialogRequest request,
     required Function(DialogResponse) completer}) {
+  /// Is a widget that allows to use multiple customs dialogs.
   var dialogType = request.variant as DialogType;
 
+  // Select between all the custo  dialogs options.
   switch (dialogType) {
     case DialogType.singleMessage:
       return SingleMessageDialog(request: request, completer: completer);

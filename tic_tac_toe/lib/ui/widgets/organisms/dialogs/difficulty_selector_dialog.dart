@@ -8,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tic_tac_toe/utils/colors.dart' as app_colors;
 
 class DifficultySelectorDialog extends StatefulWidget {
+  /// Dialog widget that allows the user to select the difficulty of the game.
   final DialogRequest request;
   final Function(DialogResponse) completer;
   const DifficultySelectorDialog(
@@ -76,15 +77,15 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () =>
-                widget.completer(DialogResponse(confirmed: true, data: {
+                selected.contains(true) ? widget.completer(DialogResponse(confirmed: true, data: {
               'difficulty': selected[0]
                   ? 10
                   : selected[1]
                       ? 50
                       : selected[2]
-                          ? 100
+                          ? 80
                           : 50,
-            })),
+            })) : null,
             child: Container(
               child: widget.request.showIconInSecondaryButton!
                   ? const Icon(Icons.check_circle)
@@ -108,6 +109,8 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
   }
 
   void setCheckboxValue(int index) {
+    /// Check one of the checkboxes and uncheck the others
+    /// index (int): the index of the checkbox to check
     int lastIndex = selected.indexOf(true);
 
     if (lastIndex != -1) {

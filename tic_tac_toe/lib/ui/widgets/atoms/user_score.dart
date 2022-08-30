@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/colors.dart' as app_colors;
 
 class UserScore extends StatefulWidget {
+  /// Widget that represents the user score
   final String userName;
   final int userScore;
 

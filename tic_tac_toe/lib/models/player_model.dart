@@ -11,8 +11,8 @@ class Player {
 
   int getMove(List<String> board) {
     /// Abstract method to define the move of the player
-    /// board is the current board state in a list of 9 strings
-    /// Return the index of the move
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// Return the index of the move (int)
     return 0;
   }
 
@@ -30,8 +30,8 @@ class Player {
 
   List<int> _emptyTiles(List<String> board) {
     /// Used to return the empty tiles indexes
-    /// board is the current board state in a list of 9 strings
-    /// Return a list of indexes from the given board
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// Return a list of indexes from the given board (List<int>)
     /// Example: ['x','o','x','x','o','o','','',''] => [6, 7, 8]
     return List.generate(board.length, (index) => index)
         .where((index) => board[index] == '')
@@ -40,10 +40,10 @@ class Player {
 
   int _minimax(List<String> board, bool isMaximizing, int index) {
     /// Implement the minimax algorithm to determine the best move for the IA
-    /// board is the current board state in a list of 9 strings
-    /// isMaximizing is true if the current player is the IA, false otherwise
-    /// index is the index of the current move
-    /// Return the index of the best move
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// isMaximizing (bool): is true if the current player is the IA, false otherwise
+    /// index (int): is the index of the current move
+    /// Return the index of the best move (int)
     String character = isMaximizing ? this.character : 'x';
     List moves = _emptyTiles(board);
 
@@ -74,14 +74,12 @@ class Player {
     return bestScore;
   }
 
-  /// Method that return if the given index is a winning move
-  /// Return true if the given index is a winning move
   bool checkWinner(List<String> board, int index, String character) {
     /// Check if the given index in the board state is a winning move
-    /// board is the current board state in a list of 9 strings
-    /// index is the index of the current move in the board state
-    /// character is the character of the current player
-    /// Return true if the given index is a winning move
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// index (int): is the index of the current move in the board state
+    /// character (String): is the character of the current player
+    /// Return true if the given index is a winning move (bool)
     /// Example: (['x','o','x','x','o','o','x','',''], 6, 'x') => true
     var row = index ~/ 3;
     var column = index % 3;
@@ -115,6 +113,9 @@ class HumanPlayer extends Player {
 
   @override
   int getMove(List<String> board) {
+    /// Get the move of the human player
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// Return the index of the move (int)
     return 0;
   }
 }
@@ -130,6 +131,8 @@ class IAPlayer extends Player {
   @override
   int getMove(List<String> board) {
     /// Return the index of the best move for the IA
+    /// board (List<String>): is the current board state in a list of 9 strings
+    /// Return the index of the move (int)
     List<int> moves = _emptyTiles(board);
 
     if (Random().nextInt(100) >= difficulty) {

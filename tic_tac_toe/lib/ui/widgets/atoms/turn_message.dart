@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/colors.dart' as app_colors;
 
 class TurnMessage extends StatefulWidget {
+  /// Widget that represents the turn message to indicate who's turn it is
   final bool turn; // false for player1, true for player2
   final String firstName;
   final String secondName;
@@ -27,7 +28,7 @@ class _TurnMessageState extends State<TurnMessage> {
       padding: const EdgeInsets.all(16.0),
       child: Center(
         child: Text(
-          widget.turn ? 'Turn of ${widget.firstName}' : 'Turn of ${widget.secondName}',
+          'Turno de ${widget.turn ? widget.firstName : widget.secondName}',
           style: const TextStyle(color: app_colors.text),
         ),
       ),

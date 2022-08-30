@@ -11,34 +11,46 @@ import 'package:tic_tac_toe/models/dialog_type.dart';
 import 'package:tic_tac_toe/models/player_model.dart';
 
 class GameService with ReactiveServiceMixin {
+  /// Service to manage all th game logic and state of the Tic Tac Toe.
   final _dialogService = locator<DialogService>();
-  List<String> charactersList = List.filled(9, '');
-  List<Player> players = [];
-  bool turn = Random().nextBool(); // false for player1, true for player2
-  bool isIA = false;
-  int difficulty = 40;
+  List<String> _charactersList = List.filled(9, '');
+  final List<Player> _players = [];
+  bool _turn = Random().nextBool(); // false for player1, true for player2
+  bool _isIA = false;
+  int _difficulty = 40;
   final _counter = ReactiveValue<int>(0);
+
+  // Getters
+  List<String> get grid => _charactersList;
+  bool get turn => _turn;
 
   GameService() {
     listenToReactiveValues([_counter]);
-    players.add(HumanPlayer(character: 'x', name: 'Player X'));
-    players.add(HumanPlayer(character: 'o', name: 'Player O'));
+    _players.add(HumanPlayer(character: 'x', name: 'Jugador X'));
+    _players.add(HumanPlayer(character: 'o', name: 'Jugador O'));
+  }
+
+  Player getPlayer(int index) {
+    /// Return the informatio of the player at the given index.
+    /// Index (int): 0 is player1, index 1 is player2.
+    if (index >= _players.length) throw ArgumentError('Invalid index');
+    return _players[index];
   }
 
   void setDefaultValues() {
     /// Start a new game saving the current scores
-    charactersList = List.filled(9, '');
-    turn = Random().nextBool();
+    _charactersList = List.filled(9, '');
+    _turn = Random().nextBool();
     _counter.value = 0;
-
-    if (turn && isIA) placeCharacter(players[1].getMove(charactersList));
-
+    
+    // IA player play first
+    if (_turn && _isIA) placeCharacter(_players[1].getMove(_charactersList));
     notifyListeners();
   }
 
   void clearGame() {
     /// Clear the game board and the scores
-    for (var player in players) {
+    for (var player in _players) {
       player.resetScore();
     }
 
@@ -47,18 +59,24 @@ class GameService with ReactiveServiceMixin {
 
   void changeDifficulty(int value) {
     /// Change the difficulty of the AI player
-    difficulty = value;
+    _difficulty = value;
+
+    // Update the AI player
+    if (_isIA){
+      _players.removeLast();
+      _players.add(IAPlayer(character: 'o', name: 'Jugador IA', difficulty: _difficulty));
+    }
     clearGame();
   }
 
   void switchIA() {
     /// Switch between IA and human player
-    isIA = !isIA;
-    players.removeLast();
+    _isIA = !_isIA;
+    _players.removeLast();
 
-    isIA
-        ? players.add(IAPlayer(character: 'o', name: 'IA player', difficulty: difficulty))
-        : players.add(HumanPlayer(character: 'o', name: 'Player O'));
+    _isIA
+        ? _players.add(IAPlayer(character: 'o', name: 'Jugador IA', difficulty: _difficulty))
+        : _players.add(HumanPlayer(character: 'o', name: 'Jugador O'));
 
     clearGame();
     notifyListeners();
@@ -66,49 +84,56 @@ class GameService with ReactiveServiceMixin {
 
   void placeCharacter(int index) {
     /// Place the character in the board if the index is not -1
-    if (index < 0 || charactersList[index] != '') {
+    /// index (int): index of the cell to place the character.
+    if (index < 0 || _charactersList[index] != '') {
       return;
     }
 
-    charactersList[index] = turn ? players[1].character : players[0].character;
-    turn = !turn;
+    // Place the character in the grid and update turn and counter
+    _charactersList[index] = _turn ? _players[1].character : _players[0].character;
+    _turn = !_turn;
     _counter.value++;
 
+    // Check if there is a winner
+    if (_players[0].checkWinner(_charactersList, index, _turn ? 'x' : 'o')) {
+      _finishGame();
+    }
+
+    // Check if there is a tie
     if (_counter.value == 9) {
       _dialogService.showCustomDialog(
         variant: DialogType.singleMessage,
-        title: 'Game Over',
-        description: 'It\'s a draw',
-        mainButtonTitle: 'New Game',
+        title: 'Juego Finalizado',
+        description: 'Es un empate',
+        mainButtonTitle: 'Nuevo Juego',
       );
 
       setDefaultValues();
-      return;
-    }
-
-    if (players[0].checkWinner(charactersList, index, turn ? 'x' : 'o')) {
-      _finishGame();
     }
     notifyListeners();
   }
 
   void tileTap(int index) {
-    /// Place the character in the board
+    /// Place the character in the board where the player tapped
+    /// index (int): index of the cell to place the character.
     placeCharacter(index);
-
-    if (isIA && turn) placeCharacter(players[1].getMove(charactersList));
+    
+    // The IA is playing, so it moves after the player
+    if (_isIA && _turn) placeCharacter(_players[1].getMove(_charactersList));
   }
 
-  _finishGame() {
+  void _finishGame() {
+    /// Finish the game and show the winner
     _dialogService.showCustomDialog(
       variant: DialogType.singleMessage,
-      title: 'Game Over',
+      title: 'Juego Finalizado',
       description:
-          'Game is over. The winner is ${turn ? players[0].name : players[1].name}',
+          'El juego termino. El ganador es ${_turn ? _players[0].name : _players[1].name}',
           mainButtonTitle: 'New Game',
     );
 
-    turn ? players[0].incrementScore() : players[1].incrementScore();
+    // Increment the score of the winner
+    _turn ? _players[0].incrementScore() : _players[1].incrementScore();
 
     setDefaultValues();
   }
