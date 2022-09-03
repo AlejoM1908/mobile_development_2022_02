@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:audioplayers/audioplayers.dart';
 import 'package:stacked/stacked.dart';
 
 // Project imports:
@@ -9,11 +10,12 @@ import 'package:tic_tac_toe/services/game_service/game_service.dart';
 class GameBoardViewModel extends ReactiveViewModel {
   /// Viewmodel for the game board widget
   final _gameService = locator<GameService>();
+  final _audioPlayer = AudioPlayer();
 
   void tileTap(int index) {
     /// Function to handle the tile tap event from the player
     /// index (int): index of the tile tapped
-    _gameService.tileTap(index);
+    if (_gameService.canPlace()) _gameService.tileTap(index);
     notifyListeners();
   }
 

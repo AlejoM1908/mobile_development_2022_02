@@ -19,19 +19,27 @@ class MainMenuView extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: app_colors.background,
-          title: Text(
-            model.title,
-            style: const TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w800,
-              color: app_colors.text,
+          title: Center(
+            child: Text(
+              model.title,
+              style: const TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.w800,
+                color: app_colors.text,
+              ),
             ),
           ),
         ),
         body: Center(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+              const SizedBox(height: 20),
+              const Image(
+                image: AssetImage('assets/images/tic-tac-toe.png'),
+                width: 200,
+              ),
+              const SizedBox(height: 40.0),
               MenuButton(
                 text: 'Nuevo Juego',
                 onPressed: () => model.newGame(),
@@ -59,7 +67,7 @@ Widget MenuButton({required Function onPressed, required String text}) {
     child: Text(
       text,
       style: const TextStyle(
-        fontSize: 20.0,
+        fontSize: 24.0,
         fontWeight: FontWeight.w800,
         color: app_colors.text,
       ),
