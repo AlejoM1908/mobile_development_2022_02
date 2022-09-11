@@ -29,7 +29,10 @@ class _TurnMessageState extends State<TurnMessage> {
       child: Center(
         child: Text(
           'Turno de ${widget.turn ? widget.firstName : widget.secondName}',
-          style: const TextStyle(color: app_colors.text),
+          style: const TextStyle(
+            color: app_colors.text,
+            fontSize: 16.0,
+          ),
         ),
       ),
     );
