@@ -91,9 +91,13 @@ class GameBoard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 40.0),
-          GameGrid(
-            onTileTap: (index) => model.tileTap(index),
-            charactersList: model.getGrid(),
+          SizedBox(
+            height: 262,
+            width: 262,
+            child: GameGrid(
+              onTileTap: (index) => model.tileTap(index),
+              charactersList: model.getGrid(),
+            ),
           ),
           const SizedBox(width: 70.0)
         ],
