@@ -24,10 +24,12 @@ class _GameGridState extends State<GameGrid> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 3,
+      flex: 1,
       child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 9,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: (0.5/0.5),
           crossAxisCount: 3,
         ),
         itemBuilder: (BuildContext context, int index) {
@@ -59,13 +61,3 @@ class _GameGridState extends State<GameGrid> {
     );
   }
 }
-
-//Widget data(){
-//  return Text(
-//                  widget.charactersList[index],
-//                  style: TextStyle(
-//                    color: widget.charactersList[index] == 'x' ? app_colors.secondary : app_colors.primary,
-//                    fontSize: 40.0,
-//                  ),
-//                );
-//}

@@ -47,45 +47,53 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
-          CheckboxListTile(
-            title: const Text('Fácil'),
-            value: selected[0],
-            onChanged: (value) {
-              setState(() {
-                setCheckboxValue(0);
-              });
-            },
-          ),
-          CheckboxListTile(
-            title: const Text('Medio'),
-            value: selected[1],
-            onChanged: (value) {
-              setState(() {
-                setCheckboxValue(1);
-              });
-            },
-          ),
-          CheckboxListTile(
-            title: const Text('Difícil'),
-            value: selected[2],
-            onChanged: (value) {
-              setState(() {
-                setCheckboxValue(2);
-              });
-            },
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(children: <Widget>[
+                CheckboxListTile(
+                  title: const Text('Fácil'),
+                  value: selected[0],
+                  onChanged: (value) {
+                    setState(() {
+                      setCheckboxValue(0);
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text('Medio'),
+                  value: selected[1],
+                  onChanged: (value) {
+                    setState(() {
+                      setCheckboxValue(1);
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text('Difícil'),
+                  value: selected[2],
+                  onChanged: (value) {
+                    setState(() {
+                      setCheckboxValue(2);
+                    });
+                  },
+                ),
+              ]),
+            ),
           ),
           const SizedBox(height: 20),
           GestureDetector(
-            onTap: () =>
-                selected.contains(true) ? widget.completer(DialogResponse(confirmed: true, data: {
-              'difficulty': selected[0]
-                  ? 10
-                  : selected[1]
-                      ? 50
-                      : selected[2]
-                          ? 80
-                          : 50,
-            })) : null,
+            onTap: () => selected.contains(true)
+                ? widget.completer(DialogResponse(confirmed: true, data: {
+                    'difficulty': selected[0]
+                        ? 10
+                        : selected[1]
+                            ? 50
+                            : selected[2]
+                                ? 80
+                                : 50,
+                  }))
+                : null,
             child: Container(
               child: widget.request.showIconInSecondaryButton!
                   ? const Icon(Icons.check_circle)
