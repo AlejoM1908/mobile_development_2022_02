@@ -21,10 +21,9 @@ class MainMenuViewModel extends BaseViewModel{
   final _gameService = locator<GameService>();
   String title = 'TIC TAC TOE';
 
-  void newGame() {
-    /// The newGame method is used to start a new game and navigate to the game screen
-    _gameService.clearGame();
-    _navigationService.navigateTo(Routes.gameView);
+  void navigateToModeSelector() {
+    /// The navigateToModeSelector method is used to navigate to the mode selector screen
+    _navigationService.navigateTo(Routes.modeSelectorView);
   }
 
   Future<void> selectDifficulty() async {

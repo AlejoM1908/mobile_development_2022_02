@@ -20,4 +20,9 @@ class GameViewModel extends BaseViewModel {
     gameService.switchIA();
     notifyListeners();
   }
+
+  bool isLocal(){
+    /// The isLocal method is used to check if the game is local
+    return !gameService.isOnline;
+  }
 }

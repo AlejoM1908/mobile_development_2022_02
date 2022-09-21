@@ -9,3 +9,7 @@ const primaryVariant = Color(0xFFF38080);
 const secondary = Color(0xFFF3F3F3);
 const secondaryVariant = Color(0xFFA6A6A6);
 const text = Color(0xFFFFFFFF);
+
+// Player tags
+const notReady = Color(0xFFFF6B6B);
+const ready = Color(0xFF60FF60);

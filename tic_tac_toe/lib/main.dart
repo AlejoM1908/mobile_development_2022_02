@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,9 +13,13 @@ import 'package:tic_tac_toe/ui/widgets/organisms/dialogs/setup_dialog_ui.dart';
 import 'env.dart';
 import 'utils/colors.dart' as app_colors;
 
-void main() {
+void main() async {
   setupLocator();
   setupDialogUI();
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   Development();
 }
 

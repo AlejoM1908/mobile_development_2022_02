@@ -21,14 +21,12 @@ class GameView extends StatelessWidget {
               elevation: 0,
               backgroundColor: app_colors.background,
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.android),
-                  onPressed: () => model.setIA(),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () => model.clearBoard(),
-                ),
+                model.isLocal()
+                    ? IconButton(
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () => model.clearBoard(),
+                      )
+                    : Container(),
               ],
               title: const Text(
                 'Tic Tac Toe',

@@ -47,6 +47,11 @@ dependencies:
   # Reproduce audio
   audioplayers: ^1.0.1
 
+  # Firebase connection
+  firebase_auth: ^3.9.0
+  firebase_core: ^1.22.0
+  cloud_firestore: ^3.4.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

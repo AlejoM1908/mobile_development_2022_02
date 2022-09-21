@@ -25,6 +25,7 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final _media = MediaQuery.of(context);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
@@ -47,40 +48,12 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(children: <Widget>[
-                CheckboxListTile(
-                  title: const Text('Fácil'),
-                  value: selected[0],
-                  onChanged: (value) {
-                    setState(() {
-                      setCheckboxValue(0);
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title: const Text('Medio'),
-                  value: selected[1],
-                  onChanged: (value) {
-                    setState(() {
-                      setCheckboxValue(1);
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title: const Text('Difícil'),
-                  value: selected[2],
-                  onChanged: (value) {
-                    setState(() {
-                      setCheckboxValue(2);
-                    });
-                  },
-                ),
-              ]),
-            ),
-          ),
+          _media.orientation == Orientation.portrait
+              ? buttonsOptions()
+              : Expanded(
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical, child: buttonsOptions()),
+              ),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () => selected.contains(true)
@@ -125,5 +98,37 @@ class _DifficultySelectorDialogState extends State<DifficultySelectorDialog> {
       selected[lastIndex] = false;
     }
     selected[index] = true;
+  }
+
+  Widget buttonsOptions() {
+    return Column(children: <Widget>[
+      CheckboxListTile(
+        title: const Text('Fácil'),
+        value: selected[0],
+        onChanged: (value) {
+          setState(() {
+            setCheckboxValue(0);
+          });
+        },
+      ),
+      CheckboxListTile(
+        title: const Text('Medio'),
+        value: selected[1],
+        onChanged: (value) {
+          setState(() {
+            setCheckboxValue(1);
+          });
+        },
+      ),
+      CheckboxListTile(
+        title: const Text('Difícil'),
+        value: selected[2],
+        onChanged: (value) {
+          setState(() {
+            setCheckboxValue(2);
+          });
+        },
+      ),
+    ]);
   }
 }

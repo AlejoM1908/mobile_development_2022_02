@@ -6,26 +6,34 @@
 
 // ignore_for_file: public_member_api_docs, unused_import, non_constant_identifier_names
 
-// Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-// Project imports:
 import '../ui/views/game/game_view.dart';
+import '../ui/views/join_room/join_room_view.dart';
 import '../ui/views/main_menu/main_menu_view.dart';
+import '../ui/views/mode_selector/mode_selector_view.dart';
+import '../ui/views/online_menu/online_menu_view.dart';
+import '../ui/views/room/room_view.dart';
 import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startupView = '/';
   static const String gameView = '/game';
   static const String mainMenuView = '/main_menu';
+  static const String modeSelectorView = '/mode_selector';
+  static const String roomView = '/room';
+  static const String onlineMenuView = '/online_menu';
+  static const String joinRoomView = '/join_room';
   static const all = <String>{
     startupView,
     gameView,
     mainMenuView,
+    modeSelectorView,
+    roomView,
+    onlineMenuView,
+    joinRoomView,
   };
 }
 
@@ -36,6 +44,10 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.gameView, page: GameView),
     RouteDef(Routes.mainMenuView, page: MainMenuView),
+    RouteDef(Routes.modeSelectorView, page: ModeSelectorView),
+    RouteDef(Routes.roomView, page: RoomView),
+    RouteDef(Routes.onlineMenuView, page: OnlineMenuView),
+    RouteDef(Routes.joinRoomView, page: JoinRoomView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -55,6 +67,30 @@ class StackedRouter extends RouterBase {
     MainMenuView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const MainMenuView(),
+        settings: data,
+      );
+    },
+    ModeSelectorView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ModeSelectorView(),
+        settings: data,
+      );
+    },
+    RoomView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const RoomView(),
+        settings: data,
+      );
+    },
+    OnlineMenuView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const OnlineMenuView(),
+        settings: data,
+      );
+    },
+    JoinRoomView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const JoinRoomView(),
         settings: data,
       );
     },
@@ -107,6 +143,70 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.mainMenuView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToModeSelectorView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.modeSelectorView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToRoomView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.roomView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToOnlineMenuView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.onlineMenuView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToJoinRoomView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.joinRoomView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
