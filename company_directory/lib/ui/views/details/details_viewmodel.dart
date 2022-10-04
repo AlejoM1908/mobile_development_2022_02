@@ -1,14 +1,18 @@
 import 'package:company_directory/app/app.locator.dart';
+import 'package:company_directory/app/app.router.dart';
 import 'package:company_directory/models/company.dart';
 import 'package:company_directory/models/company_type.dart';
 import 'package:company_directory/services/details_service.dart';
 import 'package:company_directory/services/sqlite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class DetailsViewModel extends BaseViewModel {
-  final DetailsService _detailsService = locator<DetailsService>();
-  final SQLiteService _sqliteService = locator<SQLiteService>();
+  final _detailsService = locator<DetailsService>();
+  final _sqliteService = locator<SQLiteService>();
+  final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
 
   DetailsViewModel(){
     fillData();
@@ -51,5 +55,26 @@ class DetailsViewModel extends BaseViewModel {
     );
 
     _sqliteService.addCompany(company);
+    isEditing = false;
+    notifyListeners();
+  }
+
+  void edit() {
+    isEditing = true;
+    notifyListeners();
+  }
+
+  void delete() {
+    _dialogService.showConfirmationDialog(
+      title: 'Delete',
+      description: 'Are you sure you want to delete this company?',
+      confirmationTitle: 'Yes',
+      cancelTitle: 'No',
+    ).then((value) {
+      if (value!.confirmed) {
+        _sqliteService.deleteCompany(_detailsService.company!.id);
+        _navigationService.clearStackAndShow(Routes.homeView);
+      }
+    });
   }
 }

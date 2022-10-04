@@ -35,6 +35,8 @@ class HomeViewModel extends BaseViewModel {
 
   void createCompany() {
     _detailsService.company = null;
-    _navigationService.navigateTo(Routes.detailsView);
+    _navigationService
+        .navigateTo(Routes.detailsView)
+        ?.whenComplete(() => loadCompanies());
   }
 }
