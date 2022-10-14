@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Tik Tak Toe',
+        title: 'Kitchen Hub',
         theme: ThemeData(
             canvasColor: app_colors.background,
             primaryColor: app_colors.primary,

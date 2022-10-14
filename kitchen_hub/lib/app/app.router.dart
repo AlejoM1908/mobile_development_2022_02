@@ -10,15 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../ui/views/login/login_view.dart';
+import '../ui/views/home/home_view.dart';
 import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startupView = '/';
-  static const String loginView = '/login';
+  static const String homeView = '/login';
   static const all = <String>{
     startupView,
-    loginView,
+    homeView,
   };
 }
 
@@ -27,7 +27,7 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
-    RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.homeView, page: HomeView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -38,9 +38,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    LoginView: (data) {
+    HomeView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const LoginView(),
+        builder: (context) => const HomeView(),
         settings: data,
       );
     },
@@ -68,7 +68,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToLoginView({
+  Future<dynamic> navigateToHomeView({
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -76,7 +76,7 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.loginView,
+      Routes.homeView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

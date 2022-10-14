@@ -46,8 +46,8 @@ dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_svg: ^1.1.4
 
-  # Reproduce audio
-  audioplayers: ^1.0.1
+  # Spinkit animations
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:

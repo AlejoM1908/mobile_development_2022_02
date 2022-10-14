@@ -1,10 +1,14 @@
 // Dart imports:
 import 'dart:ui';
 
-const background = const Color(0xFFFFFFFF);
-const white = const Color(0xFFFFFFFF);
-const primary = const Color(0xFFF30000);
-const primaryVariant = const Color(0xFFF38080);
-const secondary = const Color(0xFFF3F3F3);
-const secondaryVariant = const Color(0xFFA6A6A6);
-const text = const Color(0xFF8A8A8A); // black
+const background = Color(0xFFF8F8F8);
+const primary = Color(0xFF3370C1);
+const primaryVariant = Color(0xFF4589DB);
+const secondary = Color(0xFFF3F3F3);
+const secondaryVariant = Color(0xFFA6A6A6);
+
+const text = Color(0xFF101010); 
+
+const white = Color(0xFFFFFFFF);
+const darkGrey = Color(0xFF505050);
+const transparent = Color(0x00000000);

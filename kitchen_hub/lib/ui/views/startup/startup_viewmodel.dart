@@ -14,6 +14,11 @@ class StartupViewModel extends BaseViewModel {
   /// Service used to navigate to other routes
   final _navigationService = locator<NavigationService>();
 
+  final String _title = 'KITCHEN HUB';
+
+  // Getters
+  String get title => _title;
+
   StartupViewModel() {
     // Using a 3 seconds timer, then navigating to other route
     Timer(const Duration(seconds: 3), _nextScreen);
@@ -21,7 +26,7 @@ class StartupViewModel extends BaseViewModel {
 
   /// The method _navigateToGame is used to clear the widget tree and navigate to the game route
   Future _navigateToLogin() async {
-    await _navigationService.clearStackAndShow(Routes.loginView);
+    await _navigationService.clearStackAndShow(Routes.homeView);
   }
 
   /// The method _nextScreen is used to chose the next route to push into the widget tree
