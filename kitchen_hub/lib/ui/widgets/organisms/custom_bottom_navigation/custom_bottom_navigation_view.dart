@@ -5,8 +5,9 @@ import 'package:kitchen_hub/utils/colors.dart' as app_colors;
 
 class CustomBottomNavigationView extends StatelessWidget {
   final void Function(int)? changeIndex;
+  final int currentIndex;
 
-  const CustomBottomNavigationView({super.key, this.changeIndex});
+  const CustomBottomNavigationView({super.key, required this.changeIndex, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,
-                color: model.currentIndex == 0
+                color: currentIndex == 0
                     ? app_colors.primary
                     : app_colors.darkGrey,
                 onPressed: () => changeIndex!(0),
@@ -35,7 +36,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,
-                color: model.currentIndex == 1
+                color: currentIndex == 1
                     ? app_colors.primary
                     : app_colors.darkGrey,
                 onPressed: () => changeIndex!(1),
@@ -50,7 +51,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,
-                color: model.currentIndex == 2
+                color: currentIndex == 2
                     ? app_colors.primary
                     : app_colors.darkGrey,
                 onPressed: () => changeIndex!(2),
@@ -60,7 +61,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,
-                color: model.currentIndex == 3
+                color: currentIndex == 3
                     ? app_colors.primary
                     : app_colors.darkGrey,
                 onPressed: () => changeIndex!(3),

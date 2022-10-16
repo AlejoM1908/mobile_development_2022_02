@@ -64,7 +64,10 @@ class HomeView extends StatelessWidget {
             backgroundColor: app_colors.primary,
             elevation: 4.0,
           ),
-          bottomNavigationBar: const CustomBottomNavigationView()),
+          bottomNavigationBar: CustomBottomNavigationView(
+            changeIndex: model.changeIndex,
+            currentIndex: model.currentIndex,
+          )),
       viewModelBuilder: () => HomeViewModel(),
     );
   }
