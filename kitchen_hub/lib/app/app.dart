@@ -1,9 +1,10 @@
 // Package imports:
-import 'package:kitchen_hub/services/SQLite/sqlite_service.dart';
+import 'package:sqflite_migration_service/sqflite_migration_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 // Project imports:
+import 'package:kitchen_hub/services/SQLite/sqlite_service.dart';
 import 'package:kitchen_hub/ui/views/home/home_view.dart';
 import 'package:kitchen_hub/ui/views/startup/startup_view.dart';
 
@@ -16,5 +17,6 @@ import 'package:kitchen_hub/ui/views/startup/startup_view.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: DialogService),
     LazySingleton(classType: SQLiteService),
+    LazySingleton(classType: DatabaseMigrationService),
   ])
 class AppSetup{}

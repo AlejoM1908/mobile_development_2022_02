@@ -1,13 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // Package imports:
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
 // Project imports:
-import 'startup_viewmodel.dart';
 import 'package:kitchen_hub/utils/colors.dart' as app_colors;
+import 'startup_viewmodel.dart';
 
 /// The class StartupView is the view for the startup route
 class StartupView extends StatelessWidget {

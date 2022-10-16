@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:kitchen_hub/ui/widgets/organisms/custom_bottom_navigation/custom_bottom_navigation_viewmodel.dart';
+
+// Package imports:
 import 'package:stacked/stacked.dart';
+
+// Project imports:
+import 'package:kitchen_hub/ui/widgets/organisms/custom_bottom_navigation/custom_bottom_navigation_viewmodel.dart';
 import 'package:kitchen_hub/utils/colors.dart' as app_colors;
 
 class CustomBottomNavigationView extends StatelessWidget {

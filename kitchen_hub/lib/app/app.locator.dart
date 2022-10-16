@@ -6,9 +6,12 @@
 
 // ignore_for_file: public_member_api_docs
 
+// Package imports:
+import 'package:sqflite_migration_service/sqflite_migration_service.dart';
 import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+// Project imports:
 import '../services/SQLite/sqlite_service.dart';
 
 final locator = StackedLocator.instance;
@@ -23,4 +26,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => SQLiteService());
+  locator.registerLazySingleton(() => DatabaseMigrationService());
 }

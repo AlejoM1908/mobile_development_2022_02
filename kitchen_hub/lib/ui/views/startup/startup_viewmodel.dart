@@ -8,11 +8,13 @@ import 'package:stacked_services/stacked_services.dart';
 // Project imports:
 import 'package:kitchen_hub/app/app.locator.dart';
 import 'package:kitchen_hub/app/app.router.dart';
+import 'package:kitchen_hub/services/SQLite/sqlite_service.dart';
 
 /// The class StartupViewModel is the ViewModel for the startup route
 class StartupViewModel extends BaseViewModel {
   /// Service used to navigate to other routes
   final _navigationService = locator<NavigationService>();
+  final _sqliteService = locator<SQLiteService>();
 
   final String _title = 'KITCHEN HUB';
 
@@ -25,12 +27,13 @@ class StartupViewModel extends BaseViewModel {
   }
 
   /// The method _navigateToGame is used to clear the widget tree and navigate to the game route
-  Future _navigateToLogin() async {
+  Future _navigateToHome() async {
     await _navigationService.clearStackAndShow(Routes.homeView);
   }
 
   /// The method _nextScreen is used to chose the next route to push into the widget tree
   _nextScreen() async {
-    await _navigateToLogin();
+    await _sqliteService.initialise();
+    await _navigateToHome();
   }
 }

@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:stacked/stacked.dart';
+
+// Project imports:
 import 'package:kitchen_hub/ui/views/home/home_viewmodel.dart';
 import 'package:kitchen_hub/ui/widgets/organisms/custom_bottom_navigation/custom_bottom_navigation_view.dart';
-import 'package:stacked/stacked.dart';
 import 'package:kitchen_hub/utils/colors.dart' as app_colors;
 
 class HomeView extends StatelessWidget {

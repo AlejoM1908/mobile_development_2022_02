@@ -1,7 +1,10 @@
-import 'package:kitchen_hub/app/app.locator.dart';
-import 'package:kitchen_hub/models/db_models.dart';
+// Package imports:
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration_service/sqflite_migration_service.dart';
+
+// Project imports:
+import 'package:kitchen_hub/app/app.locator.dart';
+import 'package:kitchen_hub/models/db_models.dart';
 
 const String DB_NAME = 'database.sqlite';
 
@@ -46,7 +49,7 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Product(
         id: query[i]['id'],
-        category: query[i]['category'],
+        category: query[i]['ct_fk'],
         name: query[i]['name'],
         icon: query[i]['icon'],
         description: query[i]['description'],
@@ -60,8 +63,8 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -71,13 +74,13 @@ class SQLiteService {
 
   Future<List<Savings>> getSavingsByStorage(int storageId) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'storage = ?', whereArgs: [storageId]);
+        where: 'st_fk = ?', whereArgs: [storageId]);
 
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -87,13 +90,13 @@ class SQLiteService {
 
   Future<List<Savings>> getSavingsByProduct(int productId) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'product = ?', whereArgs: [productId]);
+        where: 'pr_fk = ?', whereArgs: [productId]);
 
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -103,13 +106,14 @@ class SQLiteService {
 
   Future<List<Savings>> getSavingsByCategory(int categoryId) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'category = ?', whereArgs: [categoryId]);
+        where: 'pr_fk IN (SELECT id FROM Product WHERE ct_fk = ?)',
+        whereArgs: [categoryId]);
 
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -124,8 +128,8 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -140,8 +144,8 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -156,8 +160,8 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
@@ -172,8 +176,8 @@ class SQLiteService {
     return List.generate(query.length, (i) {
       return Savings(
         id: query[i]['id'],
-        storage: query[i]['storage'],
-        product: query[i]['product'],
+        storage: query[i]['st_fk'],
+        product: query[i]['pr_fk'],
         amount: query[i]['amount'],
         added: DateTime.parse(query[i]['added']),
         expiry: DateTime.parse(query[i]['expiry']),
