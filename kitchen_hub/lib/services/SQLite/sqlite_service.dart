@@ -17,91 +17,46 @@ class SQLiteService {
 
     await _migrationService.runMigration(_database, migrationFiles: [
       '1_first_schema.sql',
+      '2_adding_values.sql',
     ], verbose: true);
   }
 
   Future<List<Storage>> getStorages() async {
     final List<Map<String, dynamic>> query = await _database!.query('Storage');
 
-    return List.generate(query.length, (i) {
-      return Storage(
-        id: query[i]['id'],
-        name: query[i]['name'],
-      );
-    });
+    return query.map((storage) => Storage.fromMap(storage)).toList();
   }
 
   Future<List<Category>> getCategories() async {
     final List<Map<String, dynamic>> query = await _database!.query('Category');
 
-    return List.generate(query.length, (i) {
-      return Category(
-        id: query[i]['id'],
-        icon: query[i]['icon'],
-        name: query[i]['name'],
-      );
-    });
+    return query.map((category) => Category.fromMap(category)).toList();
   }
 
   Future<List<Product>> getProducts() async {
     final List<Map<String, dynamic>> query = await _database!.query('Product');
 
-    return List.generate(query.length, (i) {
-      return Product(
-        id: query[i]['id'],
-        category: query[i]['ct_fk'],
-        name: query[i]['name'],
-        icon: query[i]['icon'],
-        description: query[i]['description'],
-      );
-    });
+    return query.map((product) => Product.fromMap(product)).toList();
   }
 
   Future<List<Savings>> getSavings() async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings');
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByStorage(int storageId) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'st_fk = ?', whereArgs: [storageId]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByProduct(int productId) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'pr_fk = ?', whereArgs: [productId]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByCategory(int categoryId) async {
@@ -109,80 +64,50 @@ class SQLiteService {
         where: 'pr_fk IN (SELECT id FROM Product WHERE ct_fk = ?)',
         whereArgs: [categoryId]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByDate(DateTime date) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'added = ?', whereArgs: [date.toIso8601String()]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByExpiry(DateTime date) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'expiry = ?', whereArgs: [date.toIso8601String()]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByDateRange(DateTime start, DateTime end) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'added BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByExpiryRange(DateTime start, DateTime end) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
         where: 'expiry BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
 
-    return List.generate(query.length, (i) {
-      return Savings(
-        id: query[i]['id'],
-        storage: query[i]['st_fk'],
-        product: query[i]['pr_fk'],
-        amount: query[i]['amount'],
-        added: DateTime.parse(query[i]['added']),
-        expiry: DateTime.parse(query[i]['expiry']),
-      );
-    });
+    return query.map((savings) => Savings.fromMap(savings)).toList();
+  }
+
+  Future<List<Product>> getProductByCategory(int categoryId) async {
+    final List<Map<String, dynamic>> query = await _database!.query('Product',
+        where: 'ct_fk = ?', whereArgs: [categoryId]);
+
+    return query.map((product) => Product.fromMap(product)).toList();
+  }
+
+  Future<List<Record>> getCompleteProductRecords(int categoryId) async {
+    final List<Map<String, dynamic>> query = await _database!.rawQuery(
+        'SELECT Savings.id, Storage.name AS `storageName`, Product.name AS `productName`, Savings.amount, Product.icon, Savings.added, Savings.expiracy FROM Savings INNER JOIN Product ON Savings.pr_fk = Product.id INNER JOIN Storage ON Savings.st_fk = Storage.id WHERE Product.ct_fk = ?',
+        [categoryId]);
+
+    return query.map((record) => Record.fromMap(record)).toList();
   }
 
   Future addStorage(Storage storage) async {

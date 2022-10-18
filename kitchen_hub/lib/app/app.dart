@@ -11,7 +11,7 @@ import 'package:kitchen_hub/ui/views/startup/startup_view.dart';
 @StackedApp(
   routes:[
     MaterialRoute(page: StartupView, path: '/', initial:true),
-    MaterialRoute(page: HomeView, path: '/login'),
+    MaterialRoute(page: HomeView, path: '/home'),
   ],
   dependencies:[
     LazySingleton(classType: NavigationService),

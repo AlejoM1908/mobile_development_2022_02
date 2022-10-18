@@ -1,5 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kitchen_hub/models/db_models.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/category_tag.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/product_tag.dart';
+import 'package:kitchen_hub/ui/widgets/organisms/products_showcase/products_showcase_view.dart';
 
 // Package imports:
 import 'package:stacked/stacked.dart';
@@ -34,17 +38,8 @@ class HomeView extends StatelessWidget {
                   height: media.size.height,
                   decoration: const BoxDecoration(color: app_colors.primary),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: app_colors.background,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: _getMainCenterView(model)),
                 ),
               ),
               Align(
@@ -58,6 +53,7 @@ class HomeView extends StatelessWidget {
                           model.centerClicked ? 0.0 : 300.0),
                       color: app_colors.primaryVariant,
                     ),
+                    child: model.centerClicked ? _getAddView(model) : null,
                   ))
             ],
           ),
@@ -75,5 +71,123 @@ class HomeView extends StatelessWidget {
           )),
       viewModelBuilder: () => HomeViewModel(),
     );
+  }
+
+  Widget _getMainCenterView(HomeViewModel model) {
+    switch (model.currentIndex) {
+      case 1:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      case 2:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      case 3:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      default:
+        return Container(
+            decoration: const BoxDecoration(
+              color: app_colors.background,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
+            ),
+            child: FutureBuilder(
+              future: model.getRecords(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return model.noProducts()
+                      ? const Center(
+                          child: Text(
+                            'No products found',
+                            style: TextStyle(
+                                color: app_colors.text,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: model.products.length - 1,
+                          itemBuilder: (context, index) {
+                            return ProductShowcase(
+                              onProductTap: () {},
+                              products: model.products[index],
+                              categoryTag: model.categories[index].name,
+                            );
+                          },
+                        );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ));
+    }
+  }
+
+  Widget _getAddView(HomeViewModel model) {
+    switch (model.currentIndex) {
+      case 1:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      case 2:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      case 3:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+      default:
+        return Container(
+          decoration: const BoxDecoration(
+            color: app_colors.background,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
+            ),
+          ),
+        );
+    }
   }
 }

@@ -15,6 +15,14 @@ class Storage{
     'id': _id,
     'name': _name,
   };
+
+  factory Storage.fromMap(Map<String, dynamic> map) => Storage(
+    id: map['id'],
+    name: map['name'],
+  );
+
+  @override
+  String toString() => 'Storage(id: $_id, name: $_name)';
 }
 
 /// Class used to represent the database model for the Category table.
@@ -38,6 +46,15 @@ class Category{
     'icon': _icon,
     'name': _name,
   };
+
+  factory Category.fromMap(Map<String, dynamic> map) => Category(
+    id: map['id'],
+    icon: map['icon'],
+    name: map['name'],
+  );
+
+  @override
+  String toString() => 'Category(id: $_id, icon: $_icon, name: $_name)';
 }
 
 /// Class used to represent the database model for the Product table.
@@ -69,6 +86,17 @@ class Product{
     'icon': _icon,
     'description': _description,
   };
+
+  factory Product.fromMap(Map<String, dynamic> map) => Product(
+    id: map['id'],
+    category: map['category'],
+    name: map['name'],
+    icon: map['icon'],
+    description: map['description'],
+  );
+
+  @override
+  String toString() => 'Product(id: $_id, category: $_category, name: $_name, icon: $_icon, description: $_description)';
 }
 
 /// Class used to represent the database model for the Products stored in some Storage.
@@ -104,4 +132,67 @@ class Savings{
     'added': _added.toIso8601String(),
     'expiry': _expiry.toIso8601String(),
   };
+
+  factory Savings.fromMap(Map<String, dynamic> map) => Savings(
+    id: map['id'],
+    storage: map['storage'],
+    product: map['product'],
+    amount: map['amount'],
+    added: DateTime.parse(map['added']),
+    expiry: DateTime.parse(map['expiry']),
+  );
+
+  @override
+  String toString() => 'Savings(id: $_id, storage: $_storage, product: $_product, amount: $_amount, added: $_added, expiry: $_expiry)';
+}
+
+class Record{
+  final int _id;
+  final String _storageName;
+  final String _productName;
+  final int _amount;
+  final int _icon;
+  final DateTime _added;
+  final DateTime _expiracy;
+
+  Record({required int id, required String storageName, required String productName, required int amount, required int icon, required DateTime added, required DateTime expiracy})
+      : _id = id,
+        _storageName = storageName,
+        _productName = productName,
+        _amount = amount,
+        _icon = icon,
+        _added = added,
+        _expiracy = expiracy;
+
+  // Getters
+  int get id => _id;
+  String get storageName => _storageName;
+  String get productName => _productName;
+  int get amount => _amount;
+  int get icon => _icon;
+  DateTime get added => _added;
+  DateTime get expiry => _expiracy;
+
+  Map <String, dynamic> toJson() => {
+    'id': _id,
+    'storageName': _storageName,
+    'productName': _productName,
+    'amount': _amount,
+    'icon': _icon,
+    'added': _added.toIso8601String(),
+    'expiry': _expiracy.toIso8601String(),
+  };
+
+  factory Record.fromMap(Map<String, dynamic> map) => Record(
+    id: map['id'],
+    storageName: map['storageName'],
+    productName: map['productName'],
+    amount: map['amount'],
+    icon: map['icon'],
+    added: DateTime.parse(map['added']),
+    expiracy: DateTime.parse(map['expiry']),
+  );
+
+  @override
+  String toString() => 'Record(id: $_id, storageName: $_storageName, productName: $_productName, amount: $_amount, icon: $_icon, added: $_added, expiry: $_expiracy)';
 }

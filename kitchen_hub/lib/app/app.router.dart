@@ -19,7 +19,7 @@ import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startupView = '/';
-  static const String homeView = '/login';
+  static const String homeView = '/home';
   static const all = <String>{
     startupView,
     homeView,
