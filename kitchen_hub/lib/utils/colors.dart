@@ -9,6 +9,7 @@ const secondaryVariant = Color(0xFFA6A6A6);
 
 const text = Color(0xFF101010); 
 
+const red = Color(0xFFE74C3C);
 const white = Color(0xFFFFFFFF);
 const darkGrey = Color(0xFF505050);
 const transparent = Color(0x00000000);

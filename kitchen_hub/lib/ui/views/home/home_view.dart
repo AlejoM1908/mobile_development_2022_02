@@ -1,8 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:kitchen_hub/models/db_models.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/category_tag.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/product_tag.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/date_selector.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/product_name.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/quantity_selector.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/storage_selector.dart';
 import 'package:kitchen_hub/ui/widgets/organisms/products_showcase/products_showcase_view.dart';
 
 // Package imports:
@@ -53,7 +54,18 @@ class HomeView extends StatelessWidget {
                           model.centerClicked ? 0.0 : 300.0),
                       color: app_colors.primaryVariant,
                     ),
-                    child: model.centerClicked ? _getAddView(model) : null,
+                    child: FutureBuilder(
+                      future: Future.delayed(const Duration(milliseconds: 240)),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return model.centerClicked
+                              ? _getAddView(model)
+                              : Container();
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    ),
                   ))
             ],
           ),
@@ -151,7 +163,7 @@ class HomeView extends StatelessWidget {
       case 1:
         return Container(
           decoration: const BoxDecoration(
-            color: app_colors.background,
+            color: app_colors.primaryVariant,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
@@ -161,7 +173,7 @@ class HomeView extends StatelessWidget {
       case 2:
         return Container(
           decoration: const BoxDecoration(
-            color: app_colors.background,
+            color: app_colors.primaryVariant,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
@@ -171,7 +183,7 @@ class HomeView extends StatelessWidget {
       case 3:
         return Container(
           decoration: const BoxDecoration(
-            color: app_colors.background,
+            color: app_colors.primaryVariant,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
@@ -181,11 +193,19 @@ class HomeView extends StatelessWidget {
       default:
         return Container(
           decoration: const BoxDecoration(
-            color: app_colors.background,
+            color: app_colors.primaryVariant,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
             ),
+          ),
+          child: Column(
+            children: [
+              ProductName(icon: 'assets/images/product_icon_2.png', category: 'Frutas', name: 'Banana'),
+              StorageSelector(title: 'Ubicación:', storages: model.storages, selectedStorage: model.selectedStorage, onStorageChanged: model.changeStorage),
+              QuantitySelector(title: 'Cantidad:', quantity: model.quantity, onQuantityChanged: model.changeQuantity),
+              DateSelector(title: 'Fecha de registro:', date: DateTime.now()),
+            ],
           ),
         );
     }

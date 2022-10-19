@@ -74,9 +74,9 @@ class SQLiteService {
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
-  Future<List<Savings>> getSavingsByExpiry(DateTime date) async {
+  Future<List<Savings>> getSavingsByexpiracy(DateTime date) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'expiry = ?', whereArgs: [date.toIso8601String()]);
+        where: 'expiracy = ?', whereArgs: [date.toIso8601String()]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
@@ -88,9 +88,9 @@ class SQLiteService {
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
-  Future<List<Savings>> getSavingsByExpiryRange(DateTime start, DateTime end) async {
+  Future<List<Savings>> getSavingsByexpiracyRange(DateTime start, DateTime end) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'expiry BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
+        where: 'expiracy BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
@@ -104,7 +104,7 @@ class SQLiteService {
 
   Future<List<Record>> getCompleteProductRecords(int categoryId) async {
     final List<Map<String, dynamic>> query = await _database!.rawQuery(
-        'SELECT Savings.id, Storage.name AS `storageName`, Product.name AS `productName`, Savings.amount, Product.icon, Savings.added, Savings.expiracy FROM Savings INNER JOIN Product ON Savings.pr_fk = Product.id INNER JOIN Storage ON Savings.st_fk = Storage.id WHERE Product.ct_fk = ?',
+        'SELECT Savings.id, Storage.name AS `storageName`, Product.name AS `productName`, Category.name AS `categoryName`, Savings.amount, Product.icon, Savings.added, Savings.expiracy, Product.description FROM Savings INNER JOIN Product ON Savings.pr_fk = Product.id INNER JOIN Storage ON Savings.st_fk = Storage.id INNER JOIN Category ON Product.ct_fk = Category.id WHERE Product.ct_fk = ?',
         [categoryId]);
 
     return query.map((record) => Record.fromMap(record)).toList();

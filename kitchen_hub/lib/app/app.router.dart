@@ -6,14 +6,10 @@
 
 // ignore_for_file: public_member_api_docs, unused_import, non_constant_identifier_names
 
-// Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-// Project imports:
 import '../ui/views/home/home_view.dart';
 import '../ui/views/startup/startup_view.dart';
 

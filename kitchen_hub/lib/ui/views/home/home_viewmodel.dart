@@ -9,13 +9,18 @@ class HomeViewModel extends BaseViewModel {
   
   bool _centerClicked = false;
   int _currentIndex = 0;
+  int quantity = 0;
   List<Category> _categories = [];
+  List<Storage> _storages = [];
   List<List<Record>> _products = [];
+
+  Storage selectedStorage = Storage(id: 0, name: 'Seleccione una ubicación');
 
   // Getters
   bool get centerClicked => _centerClicked;
   int get currentIndex => _currentIndex;
   List<Category> get categories => _categories;
+  List<Storage> get storages => _storages;
   List<List<Record>> get products => _products;
 
   void toggleCenterClicked() {
@@ -29,6 +34,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<bool> getRecords() async {
+    getStorages();
     _categories = await _sqliteService.getCategories();
     _products = [];
 
@@ -37,6 +43,24 @@ class HomeViewModel extends BaseViewModel {
     }
 
     return true;
+  }
+
+  Future<List<Storage>> getStorages() async {
+    _storages = [Storage(id: -1, name: 'Seleccione una ubicación')];
+    _storages.addAll(await _sqliteService.getStorages());
+    selectedStorage = _storages[0];
+    return _storages;
+  } 
+
+  void changeQuantity(int value) {
+    if (value >= 0)quantity = value;
+    notifyListeners();
+  }
+
+  void changeStorage(Storage? storage) {
+    selectedStorage = storage!;
+    print(selectedStorage);
+    notifyListeners();
   }
 
   bool noProducts() {

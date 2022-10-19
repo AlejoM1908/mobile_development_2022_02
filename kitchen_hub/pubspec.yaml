@@ -49,6 +49,9 @@ dependencies:
   # Spinkit animations
   flutter_spinkit: ^5.1.0
 
+  # Date picker
+  syncfusion_flutter_datepicker: ^20.3.50
+
   # SQLite usage
   sqflite: ^2.1.0+1
   sqflite_migration_service: ^2.0.0-nullsafety.1

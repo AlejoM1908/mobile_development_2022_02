@@ -25,7 +25,7 @@ class ProductShowcase extends StatelessWidget {
             children: products.map((product) => ProductTag(
               onTap: onProductTap,
               product: product,
-              color: _getProductColor(product.expiry),
+              color: _getProductColor(product.expiracy),
             )).toList(),
           ),
         ],
