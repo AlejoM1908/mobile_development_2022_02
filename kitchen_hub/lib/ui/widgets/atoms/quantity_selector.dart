@@ -21,19 +21,19 @@ class _QuantitySelectorState extends State<QuantitySelector> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          Text(widget.title, style: const TextStyle(color: app_colors.white, fontSize: 16.0)),
+          Text(widget.title, style: const TextStyle(color: app_colors.text, fontSize: 16.0)),
           const Expanded(child: SizedBox(width: 10.0)),
           IconButton(
-            icon: const Icon(Icons.remove, color: app_colors.white),
+            icon: const Icon(Icons.remove, color: app_colors.text),
             onPressed: () {
               if (widget.quantity > 0) {
                 widget.onQuantityChanged(widget.quantity - 1);
               }
             },
           ),
-          Text(widget.quantity.toString(), style: const TextStyle(color: app_colors.white, fontSize: 16.0)),
+          Text(widget.quantity.toString(), style: const TextStyle(color: app_colors.text, fontSize: 16.0)),
           IconButton(
-            icon: const Icon(Icons.add, color: app_colors.white),
+            icon: const Icon(Icons.add, color: app_colors.text),
             onPressed: () {
               widget.onQuantityChanged(widget.quantity + 1);
             },

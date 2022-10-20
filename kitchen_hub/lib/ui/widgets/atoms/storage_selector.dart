@@ -29,7 +29,7 @@ class _StorageSelectorState extends State<StorageSelector> {
       child: Row(
         children: <Widget>[
           Text(widget.title,
-              style: const TextStyle(color: app_colors.white, fontSize: 16.0)),
+              style: const TextStyle(color: app_colors.text, fontSize: 16.0)),
           const Expanded(child: SizedBox(width: 10.0)),
           Container(
             decoration: BoxDecoration(

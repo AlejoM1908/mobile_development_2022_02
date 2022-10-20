@@ -5,20 +5,23 @@ import 'package:sqflite_migration_service/sqflite_migration_service.dart';
 // Project imports:
 import 'package:kitchen_hub/app/app.locator.dart';
 import 'package:kitchen_hub/models/db_models.dart';
+import 'package:stacked/stacked.dart';
 
 const String DB_NAME = 'database.sqlite';
 
-class SQLiteService {
+class SQLiteService with ReactiveServiceMixin {
   final _migrationService = locator<DatabaseMigrationService>();
   Database? _database;
 
   Future initialise() async {
     _database = await openDatabase(DB_NAME, version: 1);
 
-    await _migrationService.runMigration(_database, migrationFiles: [
-      '1_first_schema.sql',
-      '2_adding_values.sql',
-    ], verbose: true);
+    await _migrationService.runMigration(_database,
+        migrationFiles: [
+          '1_first_schema.sql',
+          '2_adding_values.sql',
+        ],
+        verbose: true);
   }
 
   Future<List<Storage>> getStorages() async {
@@ -46,15 +49,15 @@ class SQLiteService {
   }
 
   Future<List<Savings>> getSavingsByStorage(int storageId) async {
-    final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'st_fk = ?', whereArgs: [storageId]);
+    final List<Map<String, dynamic>> query = await _database!
+        .query('Savings', where: 'st_fk = ?', whereArgs: [storageId]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Savings>> getSavingsByProduct(int productId) async {
-    final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'pr_fk = ?', whereArgs: [productId]);
+    final List<Map<String, dynamic>> query = await _database!
+        .query('Savings', where: 'pr_fk = ?', whereArgs: [productId]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
@@ -81,23 +84,27 @@ class SQLiteService {
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
-  Future<List<Savings>> getSavingsByDateRange(DateTime start, DateTime end) async {
+  Future<List<Savings>> getSavingsByDateRange(
+      DateTime start, DateTime end) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'added BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
+        where: 'added BETWEEN ? AND ?',
+        whereArgs: [start.toIso8601String(), end.toIso8601String()]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
-  Future<List<Savings>> getSavingsByexpiracyRange(DateTime start, DateTime end) async {
+  Future<List<Savings>> getSavingsByexpiracyRange(
+      DateTime start, DateTime end) async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings',
-        where: 'expiracy BETWEEN ? AND ?', whereArgs: [start.toIso8601String(), end.toIso8601String()]);
+        where: 'expiracy BETWEEN ? AND ?',
+        whereArgs: [start.toIso8601String(), end.toIso8601String()]);
 
     return query.map((savings) => Savings.fromMap(savings)).toList();
   }
 
   Future<List<Product>> getProductByCategory(int categoryId) async {
-    final List<Map<String, dynamic>> query = await _database!.query('Product',
-        where: 'ct_fk = ?', whereArgs: [categoryId]);
+    final List<Map<String, dynamic>> query = await _database!
+        .query('Product', where: 'ct_fk = ?', whereArgs: [categoryId]);
 
     return query.map((product) => Product.fromMap(product)).toList();
   }
@@ -113,6 +120,7 @@ class SQLiteService {
   Future addStorage(Storage storage) async {
     try {
       await _database!.insert('Storage', storage.toJson());
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -121,6 +129,7 @@ class SQLiteService {
   Future addProduct(Product product) async {
     try {
       await _database!.insert('Product', product.toJson());
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -129,6 +138,7 @@ class SQLiteService {
   Future addCategory(Category category) async {
     try {
       await _database!.insert('Category', category.toJson());
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -137,6 +147,7 @@ class SQLiteService {
   Future addSavings(Savings savings) async {
     try {
       await _database!.insert('Savings', savings.toJson());
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -146,6 +157,7 @@ class SQLiteService {
     try {
       await _database!.update('Storage', storage.toJson(),
           where: 'id = ?', whereArgs: [storage.id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -155,6 +167,7 @@ class SQLiteService {
     try {
       await _database!.update('Product', product.toJson(),
           where: 'id = ?', whereArgs: [product.id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -164,6 +177,7 @@ class SQLiteService {
     try {
       await _database!.update('Category', category.toJson(),
           where: 'id = ?', whereArgs: [category.id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -173,6 +187,7 @@ class SQLiteService {
     try {
       await _database!.update('Savings', savings.toJson(),
           where: 'id = ?', whereArgs: [savings.id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -181,6 +196,7 @@ class SQLiteService {
   Future deleteStorage(int id) async {
     try {
       await _database!.delete('Storage', where: 'id = ?', whereArgs: [id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -189,6 +205,7 @@ class SQLiteService {
   Future deleteProduct(int id) async {
     try {
       await _database!.delete('Product', where: 'id = ?', whereArgs: [id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -197,6 +214,7 @@ class SQLiteService {
   Future deleteCategory(int id) async {
     try {
       await _database!.delete('Category', where: 'id = ?', whereArgs: [id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -205,6 +223,7 @@ class SQLiteService {
   Future deleteSavings(int id) async {
     try {
       await _database!.delete('Savings', where: 'id = ?', whereArgs: [id]);
+      notifyListeners();
     } catch (e) {
       print(e);
     }

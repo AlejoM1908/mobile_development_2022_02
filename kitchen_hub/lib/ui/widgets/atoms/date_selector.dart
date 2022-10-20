@@ -24,7 +24,7 @@ class _DateSelectorState extends State<DateSelector> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(widget.title, style: const TextStyle(color: app_colors.white, fontSize: 16.0)),
+          Text(widget.title, style: const TextStyle(color: app_colors.text, fontSize: 16.0)),
           GestureDetector(
             onTap: () async {
               final response = await _dialogService.showCustomDialog(

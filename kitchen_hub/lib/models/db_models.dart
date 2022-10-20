@@ -12,7 +12,6 @@ class Storage {
   String get name => _name;
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
         'name': _name,
       };
 
@@ -42,7 +41,6 @@ class Category {
   String get name => _name;
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
         'icon': _icon,
         'name': _name,
       };
@@ -85,8 +83,7 @@ class Product {
   String get description => _description;
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
-        'category': _category,
+        'ct_fk': _category,
         'name': _name,
         'icon': _icon,
         'description': _description,
@@ -94,7 +91,7 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) => Product(
         id: map['id'],
-        category: map['category'],
+        category: map['ct_fk'],
         name: map['name'],
         icon: map['icon'],
         description: map['description'],
@@ -102,7 +99,7 @@ class Product {
 
   @override
   String toString() =>
-      'Product(id: $_id, category: $_category, name: $_name, icon: $_icon, description: $_description)';
+      'Product(id: $_id, ct_fk: $_category, name: $_name, icon: $_icon, description: $_description)';
 }
 
 /// Class used to represent the database model for the Products stored in some Storage.
@@ -137,7 +134,6 @@ class Savings {
   DateTime get expiracy => _expiracy;
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
         'storage': _storage,
         'product': _product,
         'amount': _amount,
@@ -202,7 +198,6 @@ class Record {
   String get description => _description;
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
         'storageName': _storageName,
         'productName': _productName,
         'categoryName': _categoryName,

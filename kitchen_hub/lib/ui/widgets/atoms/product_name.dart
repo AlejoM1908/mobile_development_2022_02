@@ -33,12 +33,12 @@ class ProductName extends StatelessWidget {
           children: [
             Text(category,
                 style: const TextStyle(
-                    color: app_colors.white,
+                    color: app_colors.text,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold)),
             const SizedBox(height: 5.0),
             Text(name,
-                style: const TextStyle(color: app_colors.white, fontSize: 20.0)),
+                style: const TextStyle(color: app_colors.text, fontSize: 20.0)),
           ],
         ),
       ],

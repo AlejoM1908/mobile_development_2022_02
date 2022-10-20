@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:kitchen_hub/models/db_models.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/category_box.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/date_selector.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/product_name.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/quantity_selector.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/storage_selector.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/selector.dart';
 import 'package:kitchen_hub/ui/widgets/organisms/products_showcase/products_showcase_view.dart';
 
 // Package imports:
@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       builder: (context, HomeViewModel model, child) => Scaffold(
           appBar: AppBar(
-            title: const Text('Home'),
+            title: Text(model.title),
             toolbarHeight: 50,
             elevation: 0,
             centerTitle: true,
@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           return model.centerClicked
-                              ? _getAddView(model)
+                              ? _getAddView(model, context)
                               : Container();
                         } else {
                           return const SizedBox();
@@ -166,11 +166,11 @@ class HomeView extends StatelessWidget {
                           ),
                         )
                       : ListView.builder(
-                          itemCount: model.products.length - 1,
+                          itemCount: model.records.length - 1,
                           itemBuilder: (context, index) {
                             return ProductShowcase(
                               onProductTap: () {},
-                              products: model.products[index],
+                              products: model.records[index],
                               categoryTag: model.categories[index].name,
                             );
                           },
@@ -183,7 +183,9 @@ class HomeView extends StatelessWidget {
     }
   }
 
-  Widget _getAddView(HomeViewModel model) {
+  Widget _getAddView(HomeViewModel model, BuildContext context) {
+    final media = MediaQuery.of(context);
+
     switch (model.currentIndex) {
       case 1:
         return Container(
@@ -226,20 +228,52 @@ class HomeView extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ProductName(
-                  icon: 'assets/images/product_icon_2.png',
-                  category: 'Frutas',
-                  name: 'Banana'),
-              StorageSelector(
-                  title: 'Ubicación:',
-                  storages: model.storages,
-                  selectedStorage: model.selectedStorage,
-                  onStorageChanged: model.changeStorage),
-              QuantitySelector(
-                  title: 'Cantidad:',
-                  quantity: model.quantity,
-                  onQuantityChanged: model.changeQuantity),
-              DateSelector(title: 'Fecha de registro:', date: DateTime.now()),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: model.categories.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      childAspectRatio: media.size.width / media.size.height,),
+                  itemBuilder: (context, index) {
+                    return Selector(
+                      onTap: () {
+                        model.categoryTapped(index);
+                      },
+                      icon:
+                          'assets/images/category_icon_${model.categories[index].icon}.png',
+                      title: model.categories[index].name,
+                    );
+                  },
+                ),
+              ),
+              const Divider(
+                color: app_colors.white,
+                indent: 20.0,    
+                endIndent: 20.0,            
+                thickness: 2.0,
+              ),
+              model.categoryIndex >= 0
+                  ? Expanded(
+                      child: GridView.builder(
+                        itemCount: model.products[model.categoryIndex].length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            childAspectRatio:
+                                media.size.width / media.size.height),
+                        itemBuilder: (context, index) {
+                          return Selector(
+                            onTap: () {
+                              model.productTapped(index);
+                            },
+                            icon:
+                                'assets/images/product_icon_${model.products[model.categoryIndex][index].icon}.png',
+                            title: model.products[model.categoryIndex][index]
+                                .name,
+                          );
+                        },
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         );
