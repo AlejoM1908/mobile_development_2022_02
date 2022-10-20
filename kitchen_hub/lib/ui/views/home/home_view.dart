@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kitchen_hub/models/db_models.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/category_box.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/date_selector.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/product_name.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/quantity_selector.dart';
@@ -40,7 +42,7 @@ class HomeView extends StatelessWidget {
                   decoration: const BoxDecoration(color: app_colors.primary),
                   child: Padding(
                       padding: const EdgeInsets.only(top: 5.0),
-                      child: _getMainCenterView(model)),
+                      child: _getMainCenterView(model, context)),
                 ),
               ),
               Align(
@@ -85,7 +87,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _getMainCenterView(HomeViewModel model) {
+  Widget _getMainCenterView(HomeViewModel model, BuildContext context) {
+    var media = MediaQuery.of(context);
     switch (model.currentIndex) {
       case 1:
         return Container(
@@ -109,14 +112,36 @@ class HomeView extends StatelessWidget {
         );
       case 3:
         return Container(
-          decoration: const BoxDecoration(
-            color: app_colors.background,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15.0),
-              topRight: Radius.circular(15.0),
+            decoration: const BoxDecoration(
+              color: app_colors.background,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
             ),
-          ),
-        );
+            child: FutureBuilder(
+                future: model.getCategories(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio:
+                              media.size.width / media.size.height),
+                      itemBuilder: (context, index) {
+                        return CategoryBox(
+                          onTap: () {},
+                          category: model.categories[index],
+                        );
+                      },
+                      itemCount: model.categories.length,
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }));
       default:
         return Container(
             decoration: const BoxDecoration(
@@ -201,9 +226,19 @@ class HomeView extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ProductName(icon: 'assets/images/product_icon_2.png', category: 'Frutas', name: 'Banana'),
-              StorageSelector(title: 'Ubicación:', storages: model.storages, selectedStorage: model.selectedStorage, onStorageChanged: model.changeStorage),
-              QuantitySelector(title: 'Cantidad:', quantity: model.quantity, onQuantityChanged: model.changeQuantity),
+              ProductName(
+                  icon: 'assets/images/product_icon_2.png',
+                  category: 'Frutas',
+                  name: 'Banana'),
+              StorageSelector(
+                  title: 'Ubicación:',
+                  storages: model.storages,
+                  selectedStorage: model.selectedStorage,
+                  onStorageChanged: model.changeStorage),
+              QuantitySelector(
+                  title: 'Cantidad:',
+                  quantity: model.quantity,
+                  onQuantityChanged: model.changeQuantity),
               DateSelector(title: 'Fecha de registro:', date: DateTime.now()),
             ],
           ),

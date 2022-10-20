@@ -12,7 +12,8 @@ class CustomBottomNavigationView extends StatelessWidget {
   final void Function(int)? changeIndex;
   final int currentIndex;
 
-  const CustomBottomNavigationView({super.key, required this.changeIndex, required this.currentIndex});
+  const CustomBottomNavigationView(
+      {super.key, required this.changeIndex, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 onPressed: () => changeIndex!(2),
               ),
               IconButton(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.category_rounded),
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,

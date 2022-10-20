@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _sqliteService = locator<SQLiteService>();
-  
+
   bool _centerClicked = false;
   int _currentIndex = 0;
   int quantity = 0;
@@ -39,9 +39,16 @@ class HomeViewModel extends BaseViewModel {
     _products = [];
 
     for (var category in _categories) {
-      _products.add(await _sqliteService.getCompleteProductRecords(category.id));
+      _products
+          .add(await _sqliteService.getCompleteProductRecords(category.id));
     }
 
+    return true;
+  }
+
+  Future<bool> getCategories() async {
+    _categories = [];
+    _categories = await _sqliteService.getCategories();
     return true;
   }
 
@@ -50,10 +57,10 @@ class HomeViewModel extends BaseViewModel {
     _storages.addAll(await _sqliteService.getStorages());
     selectedStorage = _storages[0];
     return _storages;
-  } 
+  }
 
   void changeQuantity(int value) {
-    if (value >= 0)quantity = value;
+    if (value >= 0) quantity = value;
     notifyListeners();
   }
 
