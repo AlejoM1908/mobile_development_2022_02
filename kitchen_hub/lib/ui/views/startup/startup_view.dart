@@ -20,27 +20,39 @@ class StartupView extends StatelessWidget {
       builder: (context, model, child) => SafeArea(
           child: Scaffold(
               body: Container(
-        width: media.size.width,
-        height: media.size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              app_colors.background,
-              app_colors.white,
-            ],
-          ),
-        ),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SpinKitPianoWave(color: app_colors.primary, size: 100.0),
-              SizedBox(height: media.size.height * 0.06),
-              Text(model.title, style: const TextStyle(fontSize: 40.0, color: app_colors.text)),
-            ]),
-      ))),
+                  width: media.size.width,
+                  height: media.size.height,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        app_colors.background,
+                        app_colors.white,
+                      ],
+                    ),
+                  ),
+                  child: FutureBuilder(
+                    future: model.loadData(),
+                    builder: (context, snapshot) {
+                      return dataLoaded(snapshot.hasData, model, media);
+                    },
+                  )))),
       viewModelBuilder: () => StartupViewModel(),
     );
+  }
+
+  Widget dataLoaded(
+      bool decision, StartupViewModel model, MediaQueryData media) {
+    if (decision) model.nextScreen();
+
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const SpinKitPianoWave(color: app_colors.primary, size: 100.0),
+          SizedBox(height: media.size.height * 0.06),
+          Text(model.title,
+              style: const TextStyle(fontSize: 40.0, color: app_colors.text)),
+        ]);
   }
 }

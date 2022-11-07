@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:kitchen_hub/services/App/data_service.dart';
 import 'package:kitchen_hub/services/App/product_service.dart';
 import 'package:kitchen_hub/ui/views/product_manage/product_manage_view.dart';
 import 'package:sqflite_migration_service/sqflite_migration_service.dart';
@@ -21,6 +22,7 @@ import 'package:kitchen_hub/ui/views/startup/startup_view.dart';
     LazySingleton(classType: DialogService),
     LazySingleton(classType: SQLiteService),
     LazySingleton(classType: DatabaseMigrationService),
-    LazySingleton(classType: ProductService)
+    LazySingleton(classType: ProductService),
+    LazySingleton(classType: DataService),
   ])
 class AppSetup{}

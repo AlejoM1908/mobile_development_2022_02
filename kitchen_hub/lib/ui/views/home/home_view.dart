@@ -119,29 +119,18 @@ class HomeView extends StatelessWidget {
                 topRight: Radius.circular(15.0),
               ),
             ),
-            child: FutureBuilder(
-                future: model.getCategories(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio:
-                              media.size.width / media.size.height),
-                      itemBuilder: (context, index) {
-                        return CategoryBox(
-                          onTap: () {},
-                          category: model.categories[index],
-                        );
-                      },
-                      itemCount: model.categories.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }));
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: media.size.width / media.size.height),
+              itemBuilder: (context, index) {
+                return CategoryBox(
+                  onTap: () {},
+                  category: model.categories[index],
+                );
+              },
+              itemCount: model.categories.length,
+            ));
       default:
         return Container(
             decoration: const BoxDecoration(
@@ -151,35 +140,26 @@ class HomeView extends StatelessWidget {
                 topRight: Radius.circular(15.0),
               ),
             ),
-            child: FutureBuilder(
-              future: model.getRecords(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return model.noProducts()
-                      ? const Center(
-                          child: Text(
-                            'No products found',
-                            style: TextStyle(
-                                color: app_colors.text,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: model.records.length - 1,
-                          itemBuilder: (context, index) {
-                            return ProductShowcase(
-                              onProductTap: () {},
-                              products: model.records[index],
-                              categoryTag: model.categories[index].name,
-                            );
-                          },
-                        );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ));
+            child: model.noProducts()
+                ? const Center(
+                    child: Text(
+                      'No products found',
+                      style: TextStyle(
+                          color: app_colors.text,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: model.records.length - 1,
+                    itemBuilder: (context, index) {
+                      return ProductShowcase(
+                        onProductTap: () {},
+                        products: model.records[index],
+                        categoryTag: model.categories[index].name,
+                      );
+                    },
+                  ));
     }
   }
 
@@ -232,8 +212,9 @@ class HomeView extends StatelessWidget {
                 child: GridView.builder(
                   itemCount: model.categories.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: media.size.width / media.size.height,),
+                      crossAxisCount: 3,
+                      childAspectRatio:
+                          media.size.width / media.size.height * 1.8),
                   itemBuilder: (context, index) {
                     return Selector(
                       onTap: () {
@@ -248,8 +229,8 @@ class HomeView extends StatelessWidget {
               ),
               const Divider(
                 color: app_colors.white,
-                indent: 20.0,    
-                endIndent: 20.0,            
+                indent: 20.0,
+                endIndent: 20.0,
                 thickness: 2.0,
               ),
               model.categoryIndex >= 0
@@ -257,9 +238,9 @@ class HomeView extends StatelessWidget {
                       child: GridView.builder(
                         itemCount: model.products[model.categoryIndex].length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
+                            crossAxisCount: 3,
                             childAspectRatio:
-                                media.size.width / media.size.height),
+                                media.size.width / media.size.height * 1.8),
                         itemBuilder: (context, index) {
                           return Selector(
                             onTap: () {
@@ -267,8 +248,8 @@ class HomeView extends StatelessWidget {
                             },
                             icon:
                                 'assets/images/product_icon_${model.products[model.categoryIndex][index].icon}.png',
-                            title: model.products[model.categoryIndex][index]
-                                .name,
+                            title:
+                                model.products[model.categoryIndex][index].name,
                           );
                         },
                       ),
