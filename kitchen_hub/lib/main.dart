@@ -21,7 +21,7 @@ void main() {
 /// Main widget for the app
 class MyApp extends StatelessWidget {
   final Env env;
-  MyApp(this.env);
+  const MyApp(this.env, {super.key});
 
   @override
   Widget build(BuildContext context) {

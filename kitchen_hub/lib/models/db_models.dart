@@ -134,8 +134,8 @@ class Savings {
   DateTime get expiracy => _expiracy;
 
   Map<String, dynamic> toJson() => {
-        'storage': _storage,
-        'product': _product,
+        'st_fk': _storage,
+        'pr_fk': _product,
         'amount': _amount,
         'added': _added.toIso8601String(),
         'expiracy': _expiracy.toIso8601String(),
@@ -143,8 +143,8 @@ class Savings {
 
   factory Savings.fromMap(Map<String, dynamic> map) => Savings(
         id: map['id'],
-        storage: map['storage'],
-        product: map['product'],
+        storage: map['st_fk'],
+        product: map['pr_fk'],
         amount: map['amount'],
         added: DateTime.parse(map['added']),
         expiracy: DateTime.parse(map['expiracy']),
@@ -158,7 +158,9 @@ class Savings {
 class Record {
   final int _id;
   final String _storageName;
+  final int _storage;
   final String _productName;
+  final int _product;
   final String _categoryName;
   final int _amount;
   final int _icon;
@@ -169,7 +171,9 @@ class Record {
   Record(
       {required int id,
       required String storageName,
+      required int storage,
       required String productName,
+      required int product,
       required String categoryName,
       required int amount,
       required int icon,
@@ -178,7 +182,9 @@ class Record {
       required String description})
       : _id = id,
         _storageName = storageName,
+        _storage = storage,
         _productName = productName,
+        _product = product,
         _categoryName = categoryName,
         _amount = amount,
         _icon = icon,
@@ -188,11 +194,13 @@ class Record {
 
   // Getters
   int get id => _id;
+  int get amount => _amount;
+  int get icon => _icon;
+  int get storage => _storage;
+  int get product => _product;
   String get storageName => _storageName;
   String get productName => _productName;
   String get categoryName => _categoryName;
-  int get amount => _amount;
-  int get icon => _icon;
   DateTime get added => _added;
   DateTime get expiracy => _expiracy;
   String get description => _description;
@@ -211,7 +219,9 @@ class Record {
   factory Record.fromMap(Map<String, dynamic> map) => Record(
         id: map['id'],
         storageName: map['storageName'],
+        storage: map['storage'],
         productName: map['productName'],
+        product: map['product'],
         categoryName: map['categoryName'],
         amount: map['amount'],
         icon: map['icon'],

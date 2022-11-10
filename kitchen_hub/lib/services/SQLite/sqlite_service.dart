@@ -111,7 +111,7 @@ class SQLiteService with ReactiveServiceMixin {
 
   Future<List<Record>> getCompleteProductRecords(int categoryId) async {
     final List<Map<String, dynamic>> query = await _database!.rawQuery(
-        'SELECT Savings.id, Storage.name AS `storageName`, Product.name AS `productName`, Category.name AS `categoryName`, Savings.amount, Product.icon, Savings.added, Savings.expiracy, Product.description FROM Savings INNER JOIN Product ON Savings.pr_fk = Product.id INNER JOIN Storage ON Savings.st_fk = Storage.id INNER JOIN Category ON Product.ct_fk = Category.id WHERE Product.ct_fk = ?',
+        'SELECT Savings.id, Storage.name AS `storageName`, Storage.id AS `storage`, Product.name AS `productName`, Product.id AS `product`, Category.name AS `categoryName`, Savings.amount, Product.icon, Savings.added, Savings.expiracy, Product.description FROM Savings INNER JOIN Product ON Savings.pr_fk = Product.id INNER JOIN Storage ON Savings.st_fk = Storage.id INNER JOIN Category ON Product.ct_fk = Category.id WHERE Product.ct_fk = ?',
         [categoryId]);
 
     return query.map((record) => Record.fromMap(record)).toList();

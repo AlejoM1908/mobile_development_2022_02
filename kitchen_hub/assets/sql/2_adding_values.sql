@@ -27,7 +27,6 @@ CREATE TABLE `Savings` (
     `amount` DECIMAL(10, 2) NOT NULL,
     `added` DATE NOT NULL,
     `expiracy` DATE NOT NULL,
-    `pd_fk` INTEGER NOT NULL,
     `st_fk` INTEGER NOT NULL,
     `pr_fk` INTEGER NOT NULL,
     FOREIGN KEY(`st_fk`) REFERENCES `Storage`(`id`),

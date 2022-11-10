@@ -64,8 +64,6 @@ class StartupViewModel extends BaseViewModel {
     _dataService.setRecords(records);
     _dataService.setProducts(products);
 
-    print(categories);
-
     return true;
   }
 }

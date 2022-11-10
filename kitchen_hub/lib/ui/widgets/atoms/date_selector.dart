@@ -7,7 +7,8 @@ import 'package:kitchen_hub/utils/colors.dart' as app_colors;
 class DateSelector extends StatefulWidget {
   final String title;
   DateTime? date;
-  DateSelector({super.key, required this.title, this.date});
+  void Function(DateTime) onChanged;
+  DateSelector({super.key, required this.title, this.date, required this.onChanged});
 
   @override
   State<DateSelector> createState() => _DateSelectorState();
@@ -15,6 +16,7 @@ class DateSelector extends StatefulWidget {
 
 class _DateSelectorState extends State<DateSelector> {
   final _dialogService = locator<DialogService>();
+  
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
@@ -36,6 +38,7 @@ class _DateSelectorState extends State<DateSelector> {
               if (response?.confirmed == true) {
                 setState(() {
                   widget.date = response?.data;
+                  widget.onChanged(response?.data);
                 });
               }
             },

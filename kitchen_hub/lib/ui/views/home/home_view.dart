@@ -235,6 +235,7 @@ class HomeView extends StatelessWidget {
               ),
               model.categoryIndex >= 0
                   ? Expanded(
+                      flex: 2,
                       child: GridView.builder(
                         itemCount: model.products[model.categoryIndex].length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

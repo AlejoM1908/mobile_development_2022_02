@@ -25,7 +25,7 @@ class ProductName extends StatelessWidget {
               color: app_colors.white,
               borderRadius: BorderRadius.circular(6.0),
             ),
-            child: Image.asset(icon, color: app_colors.text, fit: BoxFit.cover),
+            child: Image.asset(icon, fit: BoxFit.cover),
           ),
         ),
         Column(

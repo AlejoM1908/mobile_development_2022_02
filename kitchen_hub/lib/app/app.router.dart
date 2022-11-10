@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../models/db_models.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/product_manage/product_manage_view.dart';
 import '../ui/views/startup/startup_view.dart';
@@ -49,12 +50,27 @@ class StackedRouter extends RouterBase {
       );
     },
     ProductManageView: (data) {
+      var args = data.getArgs<ProductManageViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => ProductManageView(),
+        builder: (context) => ProductManageView(
+          key: args.key,
+          product: args.product,
+        ),
         settings: data,
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// ProductManageView arguments holder class
+class ProductManageViewArguments {
+  final Key? key;
+  final Record product;
+  ProductManageViewArguments({this.key, required this.product});
 }
 
 /// ************************************************************************
@@ -95,6 +111,8 @@ extension NavigatorStateExtension on NavigationService {
   }
 
   Future<dynamic> navigateToProductManageView({
+    Key? key,
+    required Record product,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -103,6 +121,7 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.productManageView,
+      arguments: ProductManageViewArguments(key: key, product: product),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
