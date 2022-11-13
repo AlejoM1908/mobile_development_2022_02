@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `Storage`;
 CREATE TABLE `Storage` (
     `id` INTEGER NOT NULL PRIMARY KEY,
+    `icon` INTEGER NOT NULL,
     `name` VARCHAR(30) NOT NULL
 );
 
@@ -34,11 +35,11 @@ CREATE TABLE `Savings` (
 );
 
 INSERT INTO
-    `Storage` (`id`, `name`)
+    `Storage` (`id`, `icon`, `name`)
 VALUES
-    (0, 'Nevera'),
-    (1, 'Congelador'),
-    (2, 'Alacena');
+    (0, 0, 'Nevera'),
+    (1, 1, 'Congelador'),
+    (2, 2, 'Alacena');
 
 INSERT INTO
     `Category` (`id`, `icon`, `name`)

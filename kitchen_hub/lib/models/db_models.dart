@@ -1,14 +1,17 @@
 /// Class used to represent the database model for the Storage table.
 class Storage {
   final int _id;
+  final int _icon;
   final String _name;
 
-  Storage({required int id, required String name})
+  Storage({required int id, required int icon, required String name})
       : _id = id,
+        _icon = icon,
         _name = name;
 
   // Getters
   int get id => _id;
+  int get icon => _icon;
   String get name => _name;
 
   Map<String, dynamic> toJson() => {
@@ -17,11 +20,12 @@ class Storage {
 
   factory Storage.fromMap(Map<String, dynamic> map) => Storage(
         id: map['id'],
+        icon: map['icon'],
         name: map['name'],
       );
 
   @override
-  String toString() => 'Storage(id: $_id, name: $_name)';
+  String toString() => 'Storage(id: $_id, icon: $_icon, name: $_name)';
 }
 
 /// Class used to represent the database model for the Category table.

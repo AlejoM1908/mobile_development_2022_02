@@ -38,7 +38,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                 onPressed: () => changeIndex!(0),
               ),
               IconButton(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.view_in_ar_rounded),
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,

@@ -96,6 +96,18 @@ class HomeView extends StatelessWidget {
               topRight: Radius.circular(15.0),
             ),
           ),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: media.size.width / media.size.height * 1.5),
+            itemBuilder: (context, index) {
+              return Selector(
+                title: model.storages[index + 1].name,
+                icon: 'assets/images/storage_icon_${model.storages[index + 1].icon}.png',
+              );
+            },
+            itemCount: model.storages.length - 1,
+          ),
         );
       case 2:
         return Container(

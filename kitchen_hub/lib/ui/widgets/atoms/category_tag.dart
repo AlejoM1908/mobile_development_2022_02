@@ -11,7 +11,7 @@ class CategoryTag extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
 
-    return Container(
+    return SizedBox(
       height: 20,
       width: media.size.width * 0.9,
       child: Row(

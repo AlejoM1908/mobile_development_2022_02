@@ -136,6 +136,4 @@ class ProductManageViewModel extends BaseViewModel {
 
     product.id == -1 ? saveProduct() : updateProduct();
   }
-
-  
 }

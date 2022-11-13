@@ -43,7 +43,7 @@ class StartupViewModel extends BaseViewModel {
   Future<bool> loadData() async {
     await _sqliteService.initialise();
 
-    List<Storage> storages = [Storage(id: -1, name: 'Seleccione una ubicación')];
+    List<Storage> storages = [Storage(id: -1, icon: 2, name: 'Seleccione una ubicación')];
     List<List<Record>> records = [];
     List<List<Product>> products = [];
 
