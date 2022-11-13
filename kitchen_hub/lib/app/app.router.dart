@@ -11,6 +11,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../models/db_models.dart';
+import '../ui/views/category_manage/category_manage_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/product_manage/product_manage_view.dart';
 import '../ui/views/startup/startup_view.dart';
@@ -19,10 +20,12 @@ class Routes {
   static const String startupView = '/';
   static const String homeView = '/home';
   static const String productManageView = '/manage';
+  static const String categoryManageView = '/category';
   static const all = <String>{
     startupView,
     homeView,
     productManageView,
+    categoryManageView,
   };
 }
 
@@ -33,6 +36,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.productManageView, page: ProductManageView),
+    RouteDef(Routes.categoryManageView, page: CategoryManageView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -59,6 +63,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    CategoryManageView: (data) {
+      var args = data.getArgs<CategoryManageViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CategoryManageView(
+          key: args.key,
+          category: args.category,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -71,6 +85,13 @@ class ProductManageViewArguments {
   final Key? key;
   final Record product;
   ProductManageViewArguments({this.key, required this.product});
+}
+
+/// CategoryManageView arguments holder class
+class CategoryManageViewArguments {
+  final Key? key;
+  final Category category;
+  CategoryManageViewArguments({this.key, required this.category});
 }
 
 /// ************************************************************************
@@ -122,6 +143,25 @@ extension NavigatorStateExtension on NavigationService {
     return navigateTo(
       Routes.productManageView,
       arguments: ProductManageViewArguments(key: key, product: product),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCategoryManageView({
+    Key? key,
+    required Category category,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.categoryManageView,
+      arguments: CategoryManageViewArguments(key: key, category: category),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

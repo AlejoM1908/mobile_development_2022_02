@@ -30,7 +30,7 @@ class HomeViewModel extends ReactiveViewModel {
   void toggleCenterClicked() {
     _centerClicked = !_centerClicked;
 
-    if (!_centerClicked){
+    if (!_centerClicked) {
       if (_currentIndex == 0) _categoryIndex = -1;
     }
     notifyListeners();
@@ -46,6 +46,12 @@ class HomeViewModel extends ReactiveViewModel {
   void categoryTapped(int index) {
     _categoryIndex = index;
     notifyListeners();
+  }
+
+  void navigateToCategoryManage() {
+    Category category = Category(name: '', icon: -1, id: -1);
+    _navigationService.navigateTo(Routes.categoryManageView,
+        arguments: CategoryManageViewArguments(category: category));
   }
 
   void productTapped(int index) {

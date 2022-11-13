@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kitchen_hub/app/app.router.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/category_box.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/selector.dart';
 import 'package:kitchen_hub/ui/widgets/organisms/products_showcase/products_showcase_view.dart';
@@ -117,8 +118,9 @@ class HomeView extends StatelessWidget {
             ),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: media.size.width / media.size.height),
+                  crossAxisCount: 3,
+                  childAspectRatio:
+                      media.size.width / media.size.height * 1.58),
               itemBuilder: (context, index) {
                 return CategoryBox(
                   onTap: () {},
@@ -184,6 +186,7 @@ class HomeView extends StatelessWidget {
           ),
         );
       case 3:
+        model.navigateToCategoryManage();
         return Container(
           decoration: const BoxDecoration(
             color: app_colors.primaryVariant,

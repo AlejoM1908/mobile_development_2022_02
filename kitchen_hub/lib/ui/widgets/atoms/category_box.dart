@@ -20,7 +20,7 @@ class CategoryBox extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
-                    width: media.size.width * 0.2,
+                    width: media.size.width * 0.3,
                     height: media.size.height * 0.15,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
@@ -39,7 +39,7 @@ class CategoryBox extends StatelessWidget {
                       ),
                     )),
                 Container(
-                  width: media.size.width * 0.2,
+                  width: media.size.width * 0.3,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -48,19 +48,21 @@ class CategoryBox extends StatelessWidget {
                     color: app_colors.darkGrey,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Flexible(
-                      fit: FlexFit.loose,
-                      child: Text(
-                        category.name,
-                        style: const TextStyle(
-                          color: app_colors.white,
-                          fontSize: 12,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              category.name,
+                              style: const TextStyle(
+                                color: app_colors.white,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      )),
                 )
               ],
             )));
