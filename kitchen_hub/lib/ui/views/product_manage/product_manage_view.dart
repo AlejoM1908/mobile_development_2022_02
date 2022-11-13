@@ -50,19 +50,38 @@ class ProductManageView extends StatelessWidget {
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: media.size.width * 0.1),
-                child: Container(
-                  constraints: const BoxConstraints.expand(height: 40),
-                  decoration:
-                      BoxDecoration(
-                        color: app_colors.primaryVariant,
-                        borderRadius: BorderRadius.circular(10.0)
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration:
+                            BoxDecoration(
+                              color: app_colors.primaryVariant,
+                              borderRadius: BorderRadius.circular(10.0)
+                            ),
+                        child: TextButton(
+                            onPressed: model.mainButton,
+                            child: Text(
+                              model.product.id == -1 ? 'Crear' : 'Actualizar',
+                              style: const TextStyle(color: app_colors.white),
+                            )),
                       ),
-                  child: TextButton(
-                      onPressed: model.clickedButton,
-                      child: Text(
-                        model.product.id == -1 ? 'Crear' : 'Actualizar',
-                        style: const TextStyle(color: app_colors.white),
-                      )),
+                    ),
+                    model.product.id != -1
+                        ? Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: app_colors.red,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: IconButton(
+                                onPressed: model.deleteProduct,
+                                icon: const Icon(Icons.delete_forever_rounded, size: 20)),
+                          ),
+                        )
+                        : Container()
+                  ],
                 ),
               )
             ],

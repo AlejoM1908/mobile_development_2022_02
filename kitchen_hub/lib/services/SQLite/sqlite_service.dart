@@ -42,6 +42,12 @@ class SQLiteService with ReactiveServiceMixin {
     return query.map((product) => Product.fromMap(product)).toList();
   }
 
+  Future<Product> getProductById(int productId) async {
+    final List<Map<String, dynamic>> query = await _database!.query('Product', where: 'id = ?', whereArgs: [productId]);
+
+    return query.map((product) => Product.fromMap(product)).toList()[0];
+  }
+
   Future<List<Savings>> getSavings() async {
     final List<Map<String, dynamic>> query = await _database!.query('Savings');
 

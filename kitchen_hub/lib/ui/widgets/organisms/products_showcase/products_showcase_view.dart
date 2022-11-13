@@ -6,13 +6,13 @@ import 'package:kitchen_hub/ui/widgets/atoms/product_tag.dart';
 class ProductShowcase extends StatelessWidget {
   final String categoryTag;
   final List<Record> products;
-  final void Function() onProductTap;
+  final void Function(Record) onProductTap;
 
   const ProductShowcase({super.key, required this.categoryTag, required this.products, required this.onProductTap});
 
   @override
   Widget build(BuildContext context) {
-    return products.length == 0 ? Container() : Padding(
+    return products.isEmpty ? Container() : Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +23,7 @@ class ProductShowcase extends StatelessWidget {
           ),
           Wrap(
             children: products.map((product) => ProductTag(
-              onTap: onProductTap,
+              onTap: () => onProductTap(product),
               product: product,
               color: _getProductColor(product.expiracy),
             )).toList(),

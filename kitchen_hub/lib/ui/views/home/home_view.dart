@@ -1,10 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/category_box.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/date_selector.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/product_name.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/quantity_selector.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/storage_selector.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/selector.dart';
 import 'package:kitchen_hub/ui/widgets/organisms/products_showcase/products_showcase_view.dart';
 
@@ -154,7 +150,7 @@ class HomeView extends StatelessWidget {
                     itemCount: model.records.length - 1,
                     itemBuilder: (context, index) {
                       return ProductShowcase(
-                        onProductTap: () {},
+                        onProductTap: model.productTagTapped,
                         products: model.records[index],
                         categoryTag: model.categories[index].name,
                       );

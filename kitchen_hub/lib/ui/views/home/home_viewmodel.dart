@@ -3,11 +3,13 @@ import 'package:kitchen_hub/app/app.locator.dart';
 import 'package:kitchen_hub/app/app.router.dart';
 import 'package:kitchen_hub/models/db_models.dart';
 import 'package:kitchen_hub/services/App/data_service.dart';
+import 'package:kitchen_hub/services/SQLite/sqlite_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends ReactiveViewModel {
   final _dataService = locator<DataService>();
+  final _sqlService = locator<SQLiteService>();
   final _navigationService = locator<NavigationService>();
 
   bool _centerClicked = false;
@@ -74,6 +76,13 @@ class HomeViewModel extends ReactiveViewModel {
     }
 
     return true;
+  }
+
+  void productTagTapped(Record product) {
+    if (_centerClicked) toggleCenterClicked();
+
+    _navigationService.navigateTo(Routes.productManageView,
+        arguments: ProductManageViewArguments(product: product));
   }
 
   @override

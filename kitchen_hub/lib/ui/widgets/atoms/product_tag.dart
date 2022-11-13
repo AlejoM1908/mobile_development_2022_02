@@ -23,7 +23,7 @@ class ProductTag extends StatelessWidget {
         onTap: onTap,
         child: FittedBox(
           child: Container(
-            height: 20,
+            height: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: color),
@@ -35,8 +35,8 @@ class ProductTag extends StatelessWidget {
                 children: <Widget>[
                   Image.asset(
                     'assets/images/product_icon_${product.icon}.png',
-                    height: 18,
-                    width: 18,
+                    height: 24,
+                    width: 24,
                   ),
                   Text(
                     '  ${product.productName}  ',

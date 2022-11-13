@@ -20,7 +20,11 @@ class ProductManageViewModel extends BaseViewModel {
 
   ProductManageViewModel({required this.product}) {
     quantity = product.amount;
-    selectedStorage = storages[0];
+    if (product.product == -1) {
+      selectedStorage = storages[0];
+    } else {
+      selectedStorage = storages[product.storage+1];
+    }
     added = product.added;
     expiracy = product.expiracy;
   }
@@ -56,15 +60,7 @@ class ProductManageViewModel extends BaseViewModel {
         mainButtonTitle: 'Aceptar');
   }
 
-  void saveProduct() async {
-    await _sqlService.addSavings(Savings(
-                  id: -1,
-                  storage: selectedStorage.id,
-                  product: product.product,
-                  amount: quantity,
-                  added: added,
-                  expiracy: expiracy));
-
+  void _updateDataService() async {
     List<List<Record>> records = [];
 
     for (var category in _dataService.categories) {
@@ -76,13 +72,55 @@ class ProductManageViewModel extends BaseViewModel {
     _navigationService.popRepeated(1);
   }
 
-  void clickedButton() async {
-    if (selectedStorage.id == -1) showError('No seleccionó un lugar de almacenamiento');
-    else if (quantity <= 0) showError('Ingresó una cantidad erronea de producto');
-    else if (expiracy.difference(added).isNegative) showError('La fecha de expiración es menor a la de ingreso');
+  void saveProduct() async {
+    await _sqlService.addSavings(Savings(
+                  id: -1,
+                  storage: selectedStorage.id,
+                  product: product.product,
+                  amount: quantity,
+                  added: added,
+                  expiracy: expiracy));
+
+    _updateDataService();
+  }
+
+  void updateProduct() async {
+    await _sqlService.updateSavings(Savings(
+      id: product.id,
+      storage: selectedStorage.id,
+      product: product.product,
+      amount: quantity,
+      added: added,
+      expiracy: expiracy
+    ));
+    
+    _updateDataService();
+  }
+  
+  void deleteProduct() async {
+    await _sqlService.deleteSavings(product.id);
+
+    _updateDataService();
+  }
+
+  void mainButton() async {
+    String message = '';
+
+    if (selectedStorage.id == -1) {
+      message = 'No seleccionó un lugar de almacenamiento';
+    } else if (quantity <= 0) {
+      message = 'Ingresó una cantidad erronea de producto';
+    } else if (expiracy.difference(added).isNegative) {
+      message = 'La fecha de expiración es menor a la de ingreso';
+    }
+
+    if (message != '') {
+      showError(message);
+      return;
+    } 
 
     // Check if the expiracy and save dates are coherent
-    if (expiracy.difference(added) <= const Duration(days: 2)) {
+    if (expiracy.difference(added) <= const Duration(days: 3)) {
       await _dialogService
           .showConfirmationDialog(
               title: 'Solicitud de concentimiento',
@@ -91,11 +129,13 @@ class ProductManageViewModel extends BaseViewModel {
               cancelTitle: 'No',
               confirmationTitle: 'Sí')
           .then((response) => response!.confirmed
-              ? saveProduct()
+              ? product.id == -1 ? saveProduct() : updateProduct()
               : null);
       return;
     }
 
-    saveProduct();
+    product.id == -1 ? saveProduct() : updateProduct();
   }
+
+  
 }
