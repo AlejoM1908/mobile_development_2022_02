@@ -132,7 +132,7 @@ class HomeView extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio:
-                      media.size.width / media.size.height * 1.58),
+                      media.size.width / media.size.height * 1.45),
               itemBuilder: (context, index) {
                 return CategoryBox(
                   onTap: () {},
@@ -198,7 +198,6 @@ class HomeView extends StatelessWidget {
           ),
         );
       case 3:
-        model.navigateToCategoryManage();
         return Container(
           decoration: const BoxDecoration(
             color: app_colors.primaryVariant,

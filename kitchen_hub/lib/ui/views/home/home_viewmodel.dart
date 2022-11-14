@@ -25,12 +25,28 @@ class HomeViewModel extends ReactiveViewModel {
   List<List<Record>> get records => _dataService.records;
   List<List<Product>> get products => _dataService.products;
 
+  void _getCenterAction(){
+    if (!_centerClicked) return;
+
+    switch (currentIndex){
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        navigateToCategoryManage();
+        toggleCenterClicked();
+    }
+  }
+
   void toggleCenterClicked() {
     _centerClicked = !_centerClicked;
 
     if (!_centerClicked) {
       if (_currentIndex == 0) _categoryIndex = -1;
     }
+
+    _getCenterAction();
     notifyListeners();
   }
 
