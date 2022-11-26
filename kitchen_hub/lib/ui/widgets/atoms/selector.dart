@@ -32,10 +32,11 @@ class Selector extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(icon, width: 50, height: 50, fit: BoxFit.cover),
+              const SizedBox(height: 10),
               Flexible(
                   fit: FlexFit.loose,
                   child: Text(title,
-                      style: const TextStyle(fontSize: 12.0),
+                      style: const TextStyle(fontSize: 14.0),
                       textAlign: TextAlign.center)),
             ],
           ),

@@ -15,6 +15,7 @@ class Storage {
   String get name => _name;
 
   Map<String, dynamic> toJson() => {
+        'icon': _icon,
         'name': _name,
       };
 

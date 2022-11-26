@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kitchen_hub/ui/widgets/organisms/dialogs/icon_chooser_dialog.dart';
 
 // Package imports:
 import 'package:stacked_services/stacked_services.dart';
@@ -18,6 +19,8 @@ void setupDialogUI() {
         child: _customDialogUI(request: sheetRequest, completer: completer)),
     DialogType.datePicker: (context, sheetRequest, completer) => Dialog(
         child: _customDialogUI(request: sheetRequest, completer: completer)),
+    DialogType.iconChooser: (context, sheetRequest, completer) => Dialog(
+        child: _customDialogUI(request: sheetRequest, completer: completer)),
   };
 
   _dialogService.registerCustomDialogBuilders(builders);
@@ -33,6 +36,8 @@ Widget _customDialogUI(
       return SingleMessageDialog(request: request, completer: completer);
     case DialogType.datePicker:
       return DatePickingDialog(request: request, completer: completer);
+    case DialogType.iconChooser:
+      return IconChooserDialog(request: request, completer: completer);
     default:
       return SingleMessageDialog(request: request, completer: completer);
   }

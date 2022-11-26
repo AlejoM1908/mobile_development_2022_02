@@ -14,6 +14,7 @@ import '../models/db_models.dart';
 import '../ui/views/category_manage/category_manage_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/product_manage/product_manage_view.dart';
+import '../ui/views/simple_manager/simple_manager_view.dart';
 import '../ui/views/startup/startup_view.dart';
 
 class Routes {
@@ -21,11 +22,13 @@ class Routes {
   static const String homeView = '/home';
   static const String productManageView = '/manage';
   static const String categoryManageView = '/category';
+  static const String simpleManagerView = '/simple_manager';
   static const all = <String>{
     startupView,
     homeView,
     productManageView,
     categoryManageView,
+    simpleManagerView,
   };
 }
 
@@ -37,6 +40,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.productManageView, page: ProductManageView),
     RouteDef(Routes.categoryManageView, page: CategoryManageView),
+    RouteDef(Routes.simpleManagerView, page: SimpleManagerView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -73,6 +77,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    SimpleManagerView: (data) {
+      var args = data.getArgs<SimpleManagerViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SimpleManagerView(
+          key: args.key,
+          data: args.data,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -92,6 +106,13 @@ class CategoryManageViewArguments {
   final Key? key;
   final Category category;
   CategoryManageViewArguments({this.key, required this.category});
+}
+
+/// SimpleManagerView arguments holder class
+class SimpleManagerViewArguments {
+  final Key? key;
+  final dynamic data;
+  SimpleManagerViewArguments({this.key, required this.data});
 }
 
 /// ************************************************************************
@@ -162,6 +183,25 @@ extension NavigatorStateExtension on NavigationService {
     return navigateTo(
       Routes.categoryManageView,
       arguments: CategoryManageViewArguments(key: key, category: category),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToSimpleManagerView({
+    Key? key,
+    required dynamic data,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.simpleManagerView,
+      arguments: SimpleManagerViewArguments(key: key, data: data),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

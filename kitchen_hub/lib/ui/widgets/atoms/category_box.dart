@@ -56,7 +56,7 @@ class CategoryBox extends StatelessWidget {
                               category.name,
                               style: const TextStyle(
                                 color: app_colors.white,
-                                fontSize: 12,
+                                fontSize: 14,
                               ),
                               textAlign: TextAlign.center,
                             ),

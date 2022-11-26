@@ -161,6 +161,7 @@ class SQLiteService with ReactiveServiceMixin {
 
   Future updateStorage(Storage storage) async {
     try {
+      print(storage);
       await _database!.update('Storage', storage.toJson(),
           where: 'id = ?', whereArgs: [storage.id]);
       notifyListeners();

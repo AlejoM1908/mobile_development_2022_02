@@ -38,8 +38,8 @@ class HomeView extends StatelessWidget {
                   height: media.size.height,
                   decoration: const BoxDecoration(color: app_colors.primary),
                   child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: _getMainCenterView(model, context)),
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: _getMainCenterView(model, context)),
                 ),
               ),
               Align(
@@ -97,11 +97,13 @@ class HomeView extends StatelessWidget {
             ),
           ),
           child: GridView.builder(
+            padding: const EdgeInsets.only(bottom: 30.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: media.size.width / media.size.height * 1.5),
             itemBuilder: (context, index) {
               return Selector(
+                onTap: () => model.updateStorage(index),
                 title: model.storages[index + 1].name,
                 icon: 'assets/images/storage_icon_${model.storages[index + 1].icon}.png',
               );
@@ -118,6 +120,19 @@ class HomeView extends StatelessWidget {
               topRight: Radius.circular(15.0),
             ),
           ),
+          child: GridView.builder(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: media.size.width / media.size.height * 1.5),
+            itemBuilder: (context, index) {
+              return Selector(
+                title: model.productsList[index].name,
+                icon: 'assets/images/product_icon_${model.productsList[index].icon}.png',
+              );
+            },
+            itemCount: model.productsList.length,
+          ),
         );
       case 3:
         return Container(
@@ -129,14 +144,16 @@ class HomeView extends StatelessWidget {
               ),
             ),
             child: GridView.builder(
+              padding: const EdgeInsets.only(bottom: 30.0),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  childAspectRatio:
-                      media.size.width / media.size.height * 1.45),
+                  childAspectRatio: media.size.width / media.size.height * 1.5),
               itemBuilder: (context, index) {
-                return CategoryBox(
-                  onTap: () {},
-                  category: model.categories[index],
+                return Selector(
+                  onTap: () => model.updateCategory(index),
+                  title: model.categories[index].name,
+                  icon:
+                      'assets/images/category_icon_${model.categories[index].icon}.png',
                 );
               },
               itemCount: model.categories.length,
@@ -161,6 +178,7 @@ class HomeView extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 30.0),
                     itemCount: model.records.length - 1,
                     itemBuilder: (context, index) {
                       return ProductShowcase(

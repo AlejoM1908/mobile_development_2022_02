@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitchen_hub/models/db_models.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/category_box.dart';
-import 'package:kitchen_hub/ui/widgets/atoms/image_box.dart';
+import 'package:kitchen_hub/ui/widgets/atoms/icon_selector.dart';
 import 'package:stacked/stacked.dart';
 
 import 'category_manage_viewmodel.dart';
@@ -29,10 +29,10 @@ class CategoryManageView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(children: [
-                    ImageBox(
-                        onTap: () {},
-                        imagePath:
-                            'assets/images/category_icon_${category.icon}.png'),
+                    IconSelector(
+                        iconTapped: model.changeIcon,
+                        iconPrefix: 'category',
+                        icon: category.icon.toString()),
                     Expanded(
                       child: TextField(
                         controller: model.nameController,

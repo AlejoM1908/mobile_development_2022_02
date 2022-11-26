@@ -23,4 +23,20 @@ class CategoryManageViewModel extends BaseViewModel {
     _dataService.addCategory(category);
     _navigationService.back();
   }
+
+  void changeIcon() async {
+    await _dialogService.showCustomDialog(
+      variant: DialogType.iconChooser,
+      data: {'iconPrefix': 'category', 'icon': category.icon.toString()},
+    ).then((value) {
+      if (value != null) {
+        category = Category(
+            id: category.id,
+            icon: int.parse(value.data.toString().split('_icon_')[1].split('.png')[0]),
+            name: category.name);
+      }
+    });
+
+    notifyListeners();
+  }
 }

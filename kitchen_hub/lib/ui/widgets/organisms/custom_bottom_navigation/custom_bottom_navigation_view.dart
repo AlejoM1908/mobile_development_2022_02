@@ -53,7 +53,7 @@ class CustomBottomNavigationView extends StatelessWidget {
                     : media.size.height * 0.08,
               ),
               IconButton(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.fastfood_rounded),
                 iconSize: media.orientation == Orientation.landscape
                     ? media.size.width * 0.05
                     : media.size.height * 0.05,

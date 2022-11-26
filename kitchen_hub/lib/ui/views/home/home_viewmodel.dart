@@ -22,6 +22,7 @@ class HomeViewModel extends ReactiveViewModel {
   int get categoryIndex => _categoryIndex;
   List<Category> get categories => _dataService.categories;
   List<Storage> get storages => _dataService.storages;
+  List<Product> get productsList => _dataService.productsList;
   List<List<Record>> get records => _dataService.records;
   List<List<Product>> get products => _dataService.products;
 
@@ -30,12 +31,15 @@ class HomeViewModel extends ReactiveViewModel {
 
     switch (currentIndex){
       case 1:
+        navigateToSimpleManager(Storage(name: '', icon: -1, id: -1));
+        toggleCenterClicked();
         break;
       case 2:
         break;
       case 3:
-        navigateToCategoryManage();
+        navigateToSimpleManager(Category(name: '', icon: -1, id: -1));
         toggleCenterClicked();
+        break;
     }
   }
 
@@ -66,6 +70,18 @@ class HomeViewModel extends ReactiveViewModel {
     Category category = Category(name: '', icon: -1, id: -1);
     _navigationService.navigateTo(Routes.categoryManageView,
         arguments: CategoryManageViewArguments(category: category));
+  }
+
+  void navigateToSimpleManager(data) {
+    _navigationService.navigateTo(Routes.simpleManagerView, arguments: SimpleManagerViewArguments(data: data));
+  }
+
+  void updateStorage(int index) {
+    navigateToSimpleManager(storages[index + 1]);
+  }
+
+  void updateCategory(int index) {
+    navigateToSimpleManager(categories[index]);
   }
 
   void productTapped(int index) {

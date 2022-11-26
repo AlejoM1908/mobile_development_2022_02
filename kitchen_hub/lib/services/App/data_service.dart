@@ -14,6 +14,7 @@ class DataService with ReactiveServiceMixin{
   // Getters
   List<Category> get categories => _categories.value;
   List<Storage> get storages => _storages.value;
+  List<Product> get productsList => _products.value.expand((element) => element).toList();
   List<List<Record>> get records => _records.value;
   List<List<Product>> get products => _products.value;
 
