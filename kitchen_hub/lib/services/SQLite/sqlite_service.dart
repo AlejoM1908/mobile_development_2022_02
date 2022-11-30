@@ -235,4 +235,36 @@ class SQLiteService with ReactiveServiceMixin {
       print(e);
     }
   }
+
+  Future deleteSavingsByStorage(int id) async {
+    try {
+      await _database!.delete('Savings', where: 'st_fk = ?', whereArgs: [id]);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future deleteSavingsByProduct(int id) async {
+    try {
+      await _database!.delete('Savings', where: 'pr_fk = ?', whereArgs: [id]);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future deleteProductsAndSavingsByCategory(int id) async {
+    try {
+      List<Product> products = await getProductByCategory(id);
+      for (Product product in products) {
+        await deleteSavingsByProduct(product.id);
+        await deleteProduct(product.id);
+      }
+      
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

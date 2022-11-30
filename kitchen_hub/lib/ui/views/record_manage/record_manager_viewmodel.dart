@@ -6,7 +6,7 @@ import 'package:kitchen_hub/services/SQLite/sqlite_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class ProductManageViewModel extends BaseViewModel {
+class RecordManagerViewModel extends BaseViewModel {
   final _dataService = locator<DataService>();
   final _dialogService = locator<DialogService>();
   final _sqlService = locator<SQLiteService>();
@@ -18,7 +18,7 @@ class ProductManageViewModel extends BaseViewModel {
   late DateTime expiracy;
   int quantity = 0;
 
-  ProductManageViewModel({required this.product}) {
+  RecordManagerViewModel({required this.product}) {
     quantity = product.amount;
     if (product.product == -1) {
       selectedStorage = storages[0];
@@ -63,7 +63,7 @@ class ProductManageViewModel extends BaseViewModel {
   void _updateDataService() async {
     List<List<Record>> records = [];
 
-    for (var category in _dataService.categories) {
+    for (var category in _dataService.categories.sublist(1)) {
       records.add(await _sqlService.getCompleteProductRecords(category.id));
     }
 

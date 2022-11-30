@@ -19,12 +19,13 @@ class ProductName extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
-            width: media.size.width * iamgeRelation,
-            height: media.size.width * iamgeRelation,
+            padding: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
               color: app_colors.white,
-              borderRadius: BorderRadius.circular(6.0),
+              borderRadius: BorderRadius.circular(10),
             ),
+            width: media.size.width * 0.2,
+            height: media.size.width * 0.2,
             child: Image.asset(icon, fit: BoxFit.cover),
           ),
         ),

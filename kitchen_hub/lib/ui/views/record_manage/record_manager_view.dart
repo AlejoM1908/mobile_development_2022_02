@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitchen_hub/models/db_models.dart';
-import 'package:kitchen_hub/ui/views/product_manage/product_manage_viewmodel.dart';
+import 'package:kitchen_hub/ui/views/record_manage/record_manager_viewmodel.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/date_selector.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/product_name.dart';
 import 'package:kitchen_hub/ui/widgets/atoms/quantity_selector.dart';
@@ -8,19 +8,20 @@ import 'package:kitchen_hub/ui/widgets/atoms/storage_selector.dart';
 import 'package:stacked/stacked.dart';
 import 'package:kitchen_hub/utils/colors.dart' as app_colors;
 
-class ProductManageView extends StatelessWidget {
+class RecordManagerView extends StatelessWidget {
   final Record product;
 
-  const ProductManageView({super.key, required this.product});
+  const RecordManagerView({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
 
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => ProductManageViewModel(product: product),
+      viewModelBuilder: () => RecordManagerViewModel(product: product),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
+          backgroundColor: app_colors.primary,
           title: Text(model.product.id == -1
               ? 'Nuevo producto'
               : 'Edición de producto'),

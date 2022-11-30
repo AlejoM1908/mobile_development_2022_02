@@ -22,6 +22,15 @@ class SimpleManagerViewModel extends ReactiveViewModel {
   }
 
   void mainButton() async {
+    if (titleController.text.isEmpty) {
+      await _dialogService.showDialog(
+        title: 'Error',
+        description: 'Please enter a name',
+        dialogPlatform: DialogPlatform.Material,
+        barrierDismissible: true,
+      );
+      return;
+    }
     if (data is Storage) {
       var storage =
           Storage(id: data.id, icon: data.icon, name: titleController.text);
@@ -45,25 +54,62 @@ class SimpleManagerViewModel extends ReactiveViewModel {
         await _sqliteService.updateCategory(category);
       }
 
-      _dataService.setCategories(await _sqliteService.getCategories());
+      List<Category> categories = [
+        Category(id: -1, icon: -1, name: 'Seleccione una categoría')
+      ];
+
+      categories.addAll(await _sqliteService.getCategories());
+      _dataService.setCategories(categories);
     }
 
+    notifyListeners();
     _navigationService.popRepeated(1);
   }
 
   void deleteButton() async {
     if (data is Storage) {
       _sqliteService.deleteStorage(data.id);
+      _sqliteService.deleteSavingsByStorage(data.id);
 
       List<Storage> storages = [Storage(id: -1, icon: -1, name: 'Seleccione una ubicación')];
+      List<List<Record>> records = [];
+
+      for (var category in _dataService.categories.sublist(1)) {
+        records
+            .add(await _sqliteService.getCompleteProductRecords(category.id));
+      }
+
       storages.addAll(await _sqliteService.getStorages());
+
       _dataService.setStogares(storages);
+      _dataService.setRecords(records);
     } else if (data is Category) {
       _sqliteService.deleteCategory(data.id);
+      _sqliteService.deleteProductsAndSavingsByCategory(data.id);
 
-      _dataService.setCategories(await _sqliteService.getCategories());
+      List<List<Product>> products = [];
+      List<List<Record>> records = [];
+      List<Category> categories = [
+        Category(id: -1, icon: -1, name: 'Seleccione una categoría')
+      ];
+
+      for (var category in _dataService.categories.sublist(1)) {
+        products.add(await _sqliteService.getProductByCategory(category.id));
+      }
+
+      for (var category in _dataService.categories.sublist(1)) {
+        records
+            .add(await _sqliteService.getCompleteProductRecords(category.id));
+      }
+
+      categories.addAll(await _sqliteService.getCategories());
+
+      _dataService.setCategories(categories);
+      _dataService.setProducts(products);
+      _dataService.setRecords(records);
     } 
 
+    notifyListeners();
     _navigationService.popRepeated(1);
   }
 

@@ -96,19 +96,22 @@ class HomeView extends StatelessWidget {
               topRight: Radius.circular(15.0),
             ),
           ),
-          child: GridView.builder(
-            padding: const EdgeInsets.only(bottom: 30.0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: media.size.width / media.size.height * 1.5),
-            itemBuilder: (context, index) {
-              return Selector(
-                onTap: () => model.updateStorage(index),
-                title: model.storages[index + 1].name,
-                icon: 'assets/images/storage_icon_${model.storages[index + 1].icon}.png',
-              );
-            },
-            itemCount: model.storages.length - 1,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: GridView.builder(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: media.size.width / media.size.height * 1.5),
+              itemBuilder: (context, index) {
+                return Selector(
+                  onTap: () => model.updateStorage(index),
+                  title: model.storages[index + 1].name,
+                  icon: 'assets/images/storage_icon_${model.storages[index + 1].icon}.png',
+                );
+              },
+              itemCount: model.storages.length - 1,
+            ),
           ),
         );
       case 2:
@@ -120,18 +123,22 @@ class HomeView extends StatelessWidget {
               topRight: Radius.circular(15.0),
             ),
           ),
-          child: GridView.builder(
-            padding: const EdgeInsets.only(bottom: 30.0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: media.size.width / media.size.height * 1.5),
-            itemBuilder: (context, index) {
-              return Selector(
-                title: model.productsList[index].name,
-                icon: 'assets/images/product_icon_${model.productsList[index].icon}.png',
-              );
-            },
-            itemCount: model.productsList.length,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: GridView.builder(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: media.size.width / media.size.height * 1.5),
+              itemBuilder: (context, index) {
+                return Selector(
+                  onTap: () => model.updateProduct(index),
+                  title: model.productsList[index].name,
+                  icon: 'assets/images/product_icon_${model.productsList[index].icon}.png',
+                );
+              },
+              itemCount: model.productsList.length,
+            ),
           ),
         );
       case 3:
@@ -143,20 +150,23 @@ class HomeView extends StatelessWidget {
                 topRight: Radius.circular(15.0),
               ),
             ),
-            child: GridView.builder(
-              padding: const EdgeInsets.only(bottom: 30.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: media.size.width / media.size.height * 1.5),
-              itemBuilder: (context, index) {
-                return Selector(
-                  onTap: () => model.updateCategory(index),
-                  title: model.categories[index].name,
-                  icon:
-                      'assets/images/category_icon_${model.categories[index].icon}.png',
-                );
-              },
-              itemCount: model.categories.length,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: GridView.builder(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: media.size.width / media.size.height * 1.5),
+                itemBuilder: (context, index) {
+                  return Selector(
+                    onTap: () => model.updateCategory(index),
+                    title: model.categories[index + 1].name,
+                    icon:
+                        'assets/images/category_icon_${model.categories[index + 1].icon}.png',
+                  );
+                },
+                itemCount: model.categories.length - 1,
+              ),
             ));
       default:
         return Container(
@@ -179,12 +189,12 @@ class HomeView extends StatelessWidget {
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.only(bottom: 30.0),
-                    itemCount: model.records.length - 1,
+                    itemCount: model.records.length,
                     itemBuilder: (context, index) {
                       return ProductShowcase(
                         onProductTap: model.productTagTapped,
                         products: model.records[index],
-                        categoryTag: model.categories[index].name,
+                        categoryTag: model.categories.sublist(1)[index].name,
                       );
                     },
                   ));
@@ -238,7 +248,7 @@ class HomeView extends StatelessWidget {
             children: [
               Expanded(
                 child: GridView.builder(
-                  itemCount: model.categories.length,
+                  itemCount: model.categories.sublist(1).length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio:
@@ -249,8 +259,8 @@ class HomeView extends StatelessWidget {
                         model.categoryTapped(index);
                       },
                       icon:
-                          'assets/images/category_icon_${model.categories[index].icon}.png',
-                      title: model.categories[index].name,
+                          'assets/images/category_icon_${model.categories[index + 1].icon}.png',
+                      title: model.categories[index + 1].name,
                     );
                   },
                 ),

@@ -11,24 +11,24 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../models/db_models.dart';
-import '../ui/views/category_manage/category_manage_view.dart';
 import '../ui/views/home/home_view.dart';
-import '../ui/views/product_manage/product_manage_view.dart';
+import '../ui/views/product_manager/product_manager_view.dart';
+import '../ui/views/record_manage/record_manager_view.dart';
 import '../ui/views/simple_manager/simple_manager_view.dart';
 import '../ui/views/startup/startup_view.dart';
 
 class Routes {
   static const String startupView = '/';
   static const String homeView = '/home';
-  static const String productManageView = '/manage';
-  static const String categoryManageView = '/category';
+  static const String recordManagerView = '/record_manager';
   static const String simpleManagerView = '/simple_manager';
+  static const String productManagerView = '/product_manager';
   static const all = <String>{
     startupView,
     homeView,
-    productManageView,
-    categoryManageView,
+    recordManagerView,
     simpleManagerView,
+    productManagerView,
   };
 }
 
@@ -38,9 +38,9 @@ class StackedRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.homeView, page: HomeView),
-    RouteDef(Routes.productManageView, page: ProductManageView),
-    RouteDef(Routes.categoryManageView, page: CategoryManageView),
+    RouteDef(Routes.recordManagerView, page: RecordManagerView),
     RouteDef(Routes.simpleManagerView, page: SimpleManagerView),
+    RouteDef(Routes.productManagerView, page: ProductManagerView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -57,22 +57,12 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    ProductManageView: (data) {
-      var args = data.getArgs<ProductManageViewArguments>(nullOk: false);
+    RecordManagerView: (data) {
+      var args = data.getArgs<RecordManagerViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => ProductManageView(
+        builder: (context) => RecordManagerView(
           key: args.key,
           product: args.product,
-        ),
-        settings: data,
-      );
-    },
-    CategoryManageView: (data) {
-      var args = data.getArgs<CategoryManageViewArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => CategoryManageView(
-          key: args.key,
-          category: args.category,
         ),
         settings: data,
       );
@@ -87,6 +77,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ProductManagerView: (data) {
+      var args = data.getArgs<ProductManagerViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ProductManagerView(
+          key: args.key,
+          data: args.data,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -94,18 +94,11 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-/// ProductManageView arguments holder class
-class ProductManageViewArguments {
+/// RecordManagerView arguments holder class
+class RecordManagerViewArguments {
   final Key? key;
   final Record product;
-  ProductManageViewArguments({this.key, required this.product});
-}
-
-/// CategoryManageView arguments holder class
-class CategoryManageViewArguments {
-  final Key? key;
-  final Category category;
-  CategoryManageViewArguments({this.key, required this.category});
+  RecordManagerViewArguments({this.key, required this.product});
 }
 
 /// SimpleManagerView arguments holder class
@@ -113,6 +106,13 @@ class SimpleManagerViewArguments {
   final Key? key;
   final dynamic data;
   SimpleManagerViewArguments({this.key, required this.data});
+}
+
+/// ProductManagerView arguments holder class
+class ProductManagerViewArguments {
+  final Key? key;
+  final Product data;
+  ProductManagerViewArguments({this.key, required this.data});
 }
 
 /// ************************************************************************
@@ -152,7 +152,7 @@ extension NavigatorStateExtension on NavigationService {
     );
   }
 
-  Future<dynamic> navigateToProductManageView({
+  Future<dynamic> navigateToRecordManagerView({
     Key? key,
     required Record product,
     int? routerId,
@@ -162,27 +162,8 @@ extension NavigatorStateExtension on NavigationService {
         transition,
   }) async {
     return navigateTo(
-      Routes.productManageView,
-      arguments: ProductManageViewArguments(key: key, product: product),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
-  Future<dynamic> navigateToCategoryManageView({
-    Key? key,
-    required Category category,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.categoryManageView,
-      arguments: CategoryManageViewArguments(key: key, category: category),
+      Routes.recordManagerView,
+      arguments: RecordManagerViewArguments(key: key, product: product),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,
@@ -202,6 +183,25 @@ extension NavigatorStateExtension on NavigationService {
     return navigateTo(
       Routes.simpleManagerView,
       arguments: SimpleManagerViewArguments(key: key, data: data),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToProductManagerView({
+    Key? key,
+    required Product data,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.productManagerView,
+      arguments: ProductManagerViewArguments(key: key, data: data),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

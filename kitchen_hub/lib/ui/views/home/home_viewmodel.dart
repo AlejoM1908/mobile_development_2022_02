@@ -35,6 +35,8 @@ class HomeViewModel extends ReactiveViewModel {
         toggleCenterClicked();
         break;
       case 2:
+        navigateToProductManager(Product(name: '', icon: -1, id: -1, category: -1, description: ''));
+        toggleCenterClicked();
         break;
       case 3:
         navigateToSimpleManager(Category(name: '', icon: -1, id: -1));
@@ -66,29 +68,31 @@ class HomeViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  void navigateToCategoryManage() {
-    Category category = Category(name: '', icon: -1, id: -1);
-    _navigationService.navigateTo(Routes.categoryManageView,
-        arguments: CategoryManageViewArguments(category: category));
-  }
-
   void navigateToSimpleManager(data) {
     _navigationService.navigateTo(Routes.simpleManagerView, arguments: SimpleManagerViewArguments(data: data));
+  }
+
+  void navigateToProductManager(data) {
+    _navigationService.navigateTo(Routes.productManagerView, arguments: ProductManagerViewArguments(data: data));
   }
 
   void updateStorage(int index) {
     navigateToSimpleManager(storages[index + 1]);
   }
 
+  void updateProduct(int index) {
+    navigateToProductManager(productsList[index]);
+  }
+
   void updateCategory(int index) {
-    navigateToSimpleManager(categories[index]);
+    navigateToSimpleManager(categories[index + 1]);
   }
 
   void productTapped(int index) {
     Record product = Record(
       id: -1,
       added: DateTime.now(),
-      categoryName: categories[_categoryIndex].name,
+      categoryName: categories.sublist(1)[_categoryIndex].name,
       productName: products[_categoryIndex][index].name,
       product: products[_categoryIndex][index].id,
       amount: 0,
@@ -100,8 +104,8 @@ class HomeViewModel extends ReactiveViewModel {
     );
 
     if (_centerClicked) toggleCenterClicked();
-    _navigationService.navigateTo(Routes.productManageView,
-        arguments: ProductManageViewArguments(product: product));
+    _navigationService.navigateTo(Routes.recordManagerView,
+        arguments: RecordManagerViewArguments(product: product));
   }
 
   bool noProducts() {
@@ -117,8 +121,8 @@ class HomeViewModel extends ReactiveViewModel {
   void productTagTapped(Record product) {
     if (_centerClicked) toggleCenterClicked();
 
-    _navigationService.navigateTo(Routes.productManageView,
-        arguments: ProductManageViewArguments(product: product));
+    _navigationService.navigateTo(Routes.recordManagerView,
+        arguments: RecordManagerViewArguments(product: product));
   }
 
   @override

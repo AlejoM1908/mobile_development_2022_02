@@ -44,18 +44,19 @@ class StartupViewModel extends BaseViewModel {
     await _sqliteService.initialise();
 
     List<Storage> storages = [Storage(id: -1, icon: -1, name: 'Seleccione una ubicación')];
+    List<Category> categories = [Category(id: -1, icon: -1, name: 'Seleccione una categoría')];
     List<List<Record>> records = [];
     List<List<Product>> products = [];
 
-    List<Category> categories = await _sqliteService.getCategories();
     storages.addAll(await _sqliteService.getStorages());
+    categories.addAll(await _sqliteService.getCategories());
 
-    for (var category in categories) {
+    for (var category in categories.sublist(1)) {
       records
           .add(await _sqliteService.getCompleteProductRecords(category.id));
     }
 
-    for (var category in categories) {
+    for (var category in categories.sublist(1)) {
       products.add(await _sqliteService.getProductByCategory(category.id));
     }
 
