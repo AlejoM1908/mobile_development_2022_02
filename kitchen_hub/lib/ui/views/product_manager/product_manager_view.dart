@@ -17,7 +17,7 @@ class ProductManagerView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             backgroundColor: app_colors.primary,
-            title: const Text('ProductManagerView'),
+            title: const Text('Crear Nuevo Producto'),
             centerTitle: true,
           ),
           body: Padding(
